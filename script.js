@@ -417,12 +417,14 @@ const playlist = {
     "Entrancing - SIYEON (Rock Cover)": ["Entrancing_Siyeon_Rock","rgb(251 114 168)",["Korean","Pop","Remix"]],
     "Paradise - SIYEON": ["Paradise_SIYEON","rgb(251 114 168)",["Korean","Pop"]],
     "Oort Cloud (오르트구름) - YOUNHA": ["Oort_Cloud_오르트구름_YOUNHA","rgb(251 114 168)",["Korean","Pop"]],
-    "浩瀚 - 张杰": ["浩瀚_张杰","rgb(251 114 168)",["Chinese","Pop","Theme/OST"]]
+    "浩瀚 - 张杰": ["浩瀚_张杰","rgb(251 114 168)",["Chinese","Pop","Theme/OST"]],
+    "Annyeong - NOVA-X": ["Annyeong_NOVAX","rgb(251 114 168)",["Korean","Pop"]]
 
 
 
 
-    //Oort_Cloud_오르트구름_YOUNHA
+    //Annyeong_NOVAX.webp
+
 };
 
 
