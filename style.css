@@ -2,17 +2,16 @@
 
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-    position: relative;
-   
-    
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center;    /* Optional: center horizontally */
+  justify-content: flex-start; /* Start from top, not centered vertically */
+  min-height: 100vh; /* Allow page to extend beyond viewport */
+  margin: 0;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Optional: hide horizontal overflow */
+}
 
-  }
 
   /* Put the background on a pseudo-element */
   body::before {
