@@ -437,32 +437,176 @@ const playlist = {
 };
 
 
-console.log(Object.keys(playlist).length);
+console.log("Playlist Length:", Object.keys(playlist).length);
 
-
-
-// ======== ELEMENT REFERENCES ========
+// ========== ELEMENT REFERENCES ==========
 const audioPlayer = document.getElementById('audioPlayer');
 const playPauseButton = document.getElementById('playPauseButton');
 const prevSongButton = document.getElementById('prevSongButton');
 const nextSongButton = document.getElementById('nextSongButton');
+
 const randomSongButton = document.getElementById('randomSongButton');
 const repeatCheckbox = document.getElementById('repeat-button');
 const repeatIcon = document.getElementById('repeatButtonIcon');
+
 const albumArtElement = document.getElementById('albumArt');
 const selectedSongElement = document.getElementById('selected-song');
 const selectedSongArtistElement = document.getElementById('selected-song-artist');
 const audioDurationElement = document.getElementById('audio-duration');
 const containerPlaylist = document.getElementById('container-playlist');
 const seekbar = document.getElementById('seekbar');
-const songContainer = document.querySelector('.current-song-container');
 
-let currentSongIndex = 0;
-let filteredSongTitles = [];
+let currentSongIndex = 0; // Start from the first song
 
-// ======== FILTER HANDLING ========
-function getActiveFilters() {
+// ========== PLAYBACK FUNCTIONS ==========
+
+// Play a song by its index in the playlist
+function playSongByIndex(index) {
+    const songNames = Object.keys(playlist);
+    const songName = songNames[index];
+    const [imageName, , , songPath] = playlist[songName];
+
+    playSong(songName, 'Artist Name', imageName, songPath);
+}
+
+// Play a specific song
+function playSong(index) {
+    currentSongIndex=index;
+    console.log("this song is ",currentSongIndex);
+    const songNames = Object.keys(playlist);        // array of song names (keys)
+    const songNameAtIndex = songNames[index];          // the name (key) at index 3
+    const songPath = playlist[songNameAtIndex][0]; 
+
+    console.log(songPath);
+
+    const audioPath = `music/${songPath}.mp3`;
+
+    if (!audioPlayer.paused) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    }
+
+    audioPlayer.src = audioPath;
+    audioPlayer.load();
+
+    audioPlayer.oncanplaythrough = () => {
+        audioPlayer.play();
+        updatePlayPauseIcon();
+    };
+
+    const fullTitle = Object.keys(playlist)[index];
+    const [title, artist] = fullTitle.split(" - ");
+
+    selectedSongElement.textContent = title.trim();
+    selectedSongArtistElement.textContent = artist?.trim() || "Unknown Artist";
+
+    albumArtElement.src = `albumArt/${songPath}.png`;
+
+    audioPlayer.onloadedmetadata = () => {
+        audioDurationElement.textContent = formatTime(audioPlayer.duration);
+    };
+}
+
+
+
+// Format time (mm:ss)
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// ========== UI FUNCTIONS ==========
+
+// Toggle play/pause and update the icon
+function updatePlayPauseIcon() {
+    playPauseButton.innerHTML = audioPlayer.paused
+        ? '<i class="fa fa-play"></i>'
+        : '<i class="fa fa-pause"></i>';
+}
+
+// Function to get the selected filters from the checkboxes
+function getSelectedFilters() {
+    const selectedFilters = [];
+    const filterElements = document.querySelectorAll('.filter-button input[type="checkbox"]:checked');
+
+    filterElements.forEach(input => {
+        const filterId = input.id.replace('-filter', ''); // Get the filter name by removing '-filter' from the id
+        selectedFilters.push(filterId);
+    });
+
+    return selectedFilters;
+}
+// Ensure this function gets called on page load and when filters are toggled
+window.onload = function() {
+    populatePlaylist(); // Initial population of the playlist
+    setupFilterListeners(); // Set up listeners for filter changes
+};
+
+// Get the selected filters
+function getSelectedFilters() {
+    const selectedFilters = [];
+    // Get all checkbox inputs under the filter buttons holder and check if they're checked
+    const filterElements = document.querySelectorAll('#filterButtonsHolder input[type="checkbox"]:checked');
+
+    filterElements.forEach(input => {
+        // Extract filter name from the checkbox id
+        const filterId = input.id.replace('-filter', ''); // Strip '-filter' from the ID
+        selectedFilters.push(filterId);
+    });
+    console.log('Selected Filters:', selectedFilters);  // Debugging log
+    return selectedFilters;
+}
+
+// Set up listeners for the filter buttons
+function setupFilterListeners() {
+    document.querySelectorAll('#filterButtonsHolder input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            populatePlaylist();  // Repopulate the playlist when a filter is toggled
+        });
+    });
+}
+function addRecentsTagToLast10() {
+    const songTitles = Object.keys(playlist);
+
+    // Add "Recents" tag to the last 10 songs in the playlist
+    const last10Songs = songTitles.slice(-12);  // Get the last 10 song titles
+
+    last10Songs.forEach(title => {
+        const song = playlist[title];
+        if (!song[2].includes('Recents')) {
+            song[2].push('Recents');  // Add "Recents" to the song's tags array if it's not already there
+        }
+    });
+}
+
+// Modify the populatePlaylist function to reflect these changes
+function addRecentsTagToLast10() {
+    const songTitles = Object.keys(playlist);
+
+    // Add "Recents" tag to the last 10 songs in the playlist
+    const last10Songs = songTitles.slice(-12);  // Get the last 10 song titles
+
+    last10Songs.forEach(title => {
+        const song = playlist[title];
+        if (!song[2].includes('Recents')) {
+            song[2].push('Recents');  // Add "Recents" to the song's tags array if it's not already there
+        }
+    });
+}
+
+// Modify the populatePlaylist function to reflect these changes
+function populatePlaylist() {
+    const container = document.getElementById('container-playlist');
+    const dropdown = document.getElementById('songSelect');
+
+    // Clear previous song options
+    container.innerHTML = '';
+    dropdown.innerHTML = '';
+
     const filters = [];
+
+    // Check the state of each filter checkbox and add it to the filters array if checked
     if (document.getElementById('recents-filter').checked) filters.push('Recents');
     if (document.getElementById('instrumental-filter').checked) filters.push('Instrumental');
     if (document.getElementById('epic-filter').checked) filters.push('Epic');
@@ -487,161 +631,125 @@ function getActiveFilters() {
     if (document.getElementById('ENHYPEN-filter').checked) filters.push('ENHYPEN');
     if (document.getElementById('TXT-filter').checked) filters.push('TXT');
     if (document.getElementById('ONEUS-filter').checked) filters.push('ONEUS');
-    if (document.getElementById('TEAM-filter').checked) filters.push('&TEAM');
-    if (document.getElementById('LSY-filter').checked) filters.push('LSY');
-    return filters;
-}
 
-// ======== RECENTS HANDLING ========
-function addRecentsTagToLast12() {
-    const songTitles = Object.keys(playlist);
-    const last12Songs = songTitles.slice(-12);
-    last12Songs.forEach(title => {
-        const song = playlist[title];
-        if (!song[2].includes('Recents')) {
-            song[2].push('Recents');
-        }
-    });
-}
+    //if (document.getElementById('favorites-filter').checked) filters.push('Favorites');
 
-// ======== PLAY SONG ========
-function playSong(index) {
-    showSongInfo(index);
-    currentSongIndex = index;
-    const songName = filteredSongTitles[index];
-    const [songPath] = playlist[songName]; // this is like "我相信_楊培安"
-    const audioPath = `music/${songPath}.mp3`;
+    console.log("FILTERS CHOSEN: ", filters);  // Debugging log
 
-    // play audio
-    if (!audioPlayer.paused) {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-    }
-    audioPlayer.src = audioPath;
-    audioPlayer.load();
+    let anyMatch = false; 
 
-    audioPlayer.oncanplaythrough = () => {
-        audioPlayer.play();
-        updatePlayPauseIcon();
-    };
+    // Load favorites from localStorage
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || {}; 
 
-    // update current song text and album art
-    const [title, artist] = songName.split(" - ");
-    selectedSongElement.textContent = title.trim();
-    selectedSongArtistElement.textContent = artist?.trim() || "Unknown Artist";
-    albumArtElement.src = `albumArt/${songPath}.webp`;
+    // Add "Recents" tag to the last 10 songs in the playlist
+    addRecentsTagToLast10();
 
-    // set background
-    songContainer.style.backgroundImage = `url('albumArt/${songPath}.webp')`;
-    songContainer.style.backgroundSize = "cover";
-    songContainer.style.backgroundPosition = "center";
-    songContainer.style.backgroundRepeat = "no-repeat";
-
-    audioPlayer.onloadedmetadata = () => {
-        audioDurationElement.textContent = formatTime(audioPlayer.duration);
-    };
-
-    // Load lyrics for this song
-    loadLyrics(songPath); // <--- this line loads lyrics JSON
-}
-
-
-// ======== FORMAT TIME ========
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-}
-
-// ======== UPDATE ICON ========
-function updatePlayPauseIcon() {
-    playPauseButton.innerHTML = audioPlayer.paused
-        ? '&nbsp; <i class="fa fa-play"></i> &nbsp; Play'
-        : '<i class="fa fa-pause"></i> &nbsp; Pause';
-}
-
-function populatePlaylist() {
-    containerPlaylist.innerHTML = '';
-    filteredSongTitles = [];
-
-    // Collect active filters
-    const filters = [];
-    if (document.getElementById('recents-filter').checked) filters.push('Recents');
-    if (document.getElementById('instrumental-filter').checked) filters.push('Instrumental');
-    if (document.getElementById('epic-filter').checked) filters.push('Epic');
-    if (document.getElementById('remix-filter').checked) filters.push('Remix');
-    if (document.getElementById('samuelkim-filter').checked) filters.push('SamuelKim');
-    if (document.getElementById('theme-filter').checked) filters.push('Theme/OST');
-    if (document.getElementById('chinese-filter').checked) filters.push('Chinese');
-    if (document.getElementById('canto-filter').checked) filters.push('Canto');
-    if (document.getElementById('english-filter').checked) filters.push('English');
-    if (document.getElementById('jpn-filter').checked) filters.push('Japanese');
-    if (document.getElementById('anime-filter').checked) filters.push('Anime');
-    if (document.getElementById('korean-filter').checked) filters.push('Korean');
-    if (document.getElementById('pop-filter').checked) filters.push('Pop');
-    if (document.getElementById('ateez-filter').checked) filters.push('ATEEZ');
-    if (document.getElementById('geodash-filter').checked) filters.push('geodash');
-    if (document.getElementById('swedish-filter').checked) filters.push('Swedish');
-    if (document.getElementById('russian-filter').checked) filters.push('Russian');
-    if (document.getElementById('tsfh-filter').checked) filters.push('TSFH');
-    if (document.getElementById('filipino-filter').checked) filters.push('Filipino');
-    if (document.getElementById('BAP-filter').checked) filters.push('BAP');
-    if (document.getElementById('INFINITE-filter').checked) filters.push('INFINITE');
-    if (document.getElementById('ENHYPEN-filter').checked) filters.push('ENHYPEN');
-    if (document.getElementById('TXT-filter').checked) filters.push('TXT');
-    if (document.getElementById('ONEUS-filter').checked) filters.push('ONEUS');
-    if (document.getElementById('TEAM-filter').checked) filters.push('&TEAM');
-    if (document.getElementById('LSY-filter').checked) filters.push('LSY');
-
-    addRecentsTagToLast12(); // make sure to tag last 12 songs as "Recents"
-
+    // Iterate through the playlist and apply filters
     for (const title in playlist) {
-        const song = playlist[title];
-        const songTags = song[2];
+        if (playlist.hasOwnProperty(title)) {
+            const song = playlist[title];
+            const songTags = song[2];  // songTags are at index 2
 
-        // Only include songs that match all filters
-        const matches = filters.every(f => songTags.includes(f));
-        if (matches || filters.length === 0) {
-            filteredSongTitles.push(title);
-
-            const item = document.createElement('div');
-            item.classList.add('song-item');
-
-            // Set album art as background
-            item.style.backgroundImage = `url('albumArt/${song[0]}.webp')`;
-
-            item.innerHTML = `
-                <div class="song-description">
-                    <h5 class="song-title">${title.split(' - ')[0]}</h5>
-                    <p class="artist-name">${title.split(' - ')[1]}</p>
-                </div>
-            `;
-
-            item.addEventListener('click', () => {
-                currentSongIndex = filteredSongTitles.indexOf(title);
-                playSong(currentSongIndex);
+            // Check if the song matches all the selected filters
+            const matchesFilters = filters.every(filter => {
+                if (filter === 'Favorites') {
+                    return favorites[title];  // Check if the song is in favorites
+                }
+                return songTags.includes(filter);  // Check if the song has the filter tag
             });
 
-            containerPlaylist.appendChild(item);
+            if (matchesFilters) {
+                // If the song matches the filters, create a new song item element
+
+                const songItem = document.createElement('div');
+                songItem.classList.add('song-item');
+                songItem.style.backgroundColor = "transparent";  // Assuming color can be applied here
+
+                const image = document.createElement('img');
+                image.src = `albumArt/${song[0]}.png`;  // Assuming the album image is in `song[0]`
+                image.classList.add('song-image');
+                image.alt = title;
+
+                const description = document.createElement('div');
+                description.classList.add('song-description');
+
+                const [songTitleText, artistNameText] = title.split(' - ');
+
+                const songTitle = document.createElement('h5');
+                songTitle.textContent = songTitleText;
+                songTitle.classList.add('song-title');
+
+                const artistName = document.createElement('p');
+                artistName.textContent = artistNameText || '';
+                artistName.classList.add('artist-name');
+
+                description.appendChild(songTitle);
+                description.appendChild(artistName);
+
+                songItem.appendChild(image);
+                songItem.appendChild(description);
+
+                // Add click event to each song item
+                songItem.addEventListener('click', () => {
+                    const songNames = Object.keys(playlist);
+                    const currentSongIndex = songNames.indexOf(title); // Get the index of the clicked song
+                    console.log("Clicked index:", currentSongIndex);
+                    playSong(currentSongIndex); // Play the song at the clicked index
+                });
+
+                // Append the song item to the playlist container
+                container.appendChild(songItem);
+                anyMatch = true;
+            }
         }
     }
 
-    if (filteredSongTitles.length === 0) {
-        containerPlaylist.innerHTML = '<p>No songs match the selected filters.</p>';
+    // If no songs match the filters, you can display a message
+    if (!anyMatch) {
+        const noSongsMessage = document.createElement('p');
+        noSongsMessage.textContent = "No songs match the selected filters.";
+        noSongsMessage.style.fontFamily = "Arimo, sans-serif"; // Set font, using a fallback font
+        container.appendChild(noSongsMessage);
     }
 }
 
+// Event listener to trigger populatePlaylist when a filter is changed
+document.querySelectorAll('.filter-button input').forEach(input => {
+    input.addEventListener('change', populatePlaylist);
+});
 
-// ======== EVENT LISTENERS ========
+
+
+
+document.querySelectorAll('.filter-button input').forEach(input => {
+
+    input.addEventListener('change', populatePlaylist);
+});
+
+
+
+
+
+
+// ========== EVENT LISTENERS ==========
+
 playPauseButton.addEventListener('click', () => {
-    if (audioPlayer.paused) audioPlayer.play();
-    else audioPlayer.pause();
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+    } else {
+        audioPlayer.pause();
+    }
     updatePlayPauseIcon();
 });
 
-audioPlayer.addEventListener('play', updatePlayPauseIcon);
+audioPlayer.addEventListener('play', () => {
+
+    updatePlayPauseIcon();
+});
+
 audioPlayer.addEventListener('pause', updatePlayPauseIcon);
 
+// Seekbar updates
 audioPlayer.addEventListener('timeupdate', () => {
     if (!isNaN(audioPlayer.duration)) {
         seekbar.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
@@ -649,270 +757,88 @@ audioPlayer.addEventListener('timeupdate', () => {
 });
 
 seekbar.addEventListener('input', () => {
+    console.log("repeat mode:",repeatCheckbox.checked);
     const newTime = (seekbar.value / 100) * audioPlayer.duration;
     audioPlayer.currentTime = newTime;
 });
 
+
+
 prevSongButton.addEventListener('click', () => {
     currentSongIndex--;
-    if (currentSongIndex < 0) currentSongIndex = filteredSongTitles.length - 1;
+    console.log("the curr songind: ",currentSongIndex);
+
+    // Loop to last song if at the beginning
+    if (currentSongIndex < 0) {
+        currentSongIndex = Object.keys(playlist).length - 1;
+    }
+
     playSong(currentSongIndex);
 });
 
 nextSongButton.addEventListener('click', () => {
     currentSongIndex++;
-    if (currentSongIndex >= filteredSongTitles.length) currentSongIndex = 0;
+    if (currentSongIndex >= Object.keys(playlist).length) {
+        currentSongIndex = 0; // Loop to first song if at the end
+    }
     playSong(currentSongIndex);
 });
 
-randomSongButton.addEventListener('click', () => {
-    currentSongIndex = Math.floor(Math.random() * filteredSongTitles.length);
-    playSong(currentSongIndex);
+
+const repeatButton = document.getElementById('repeatButtonIcon');
+
+// Ensure the initial icon reflects the checkbox state
+repeatIcon.innerHTML = repeatCheckbox.checked 
+    ? '<i class="fa fa-remove"></i>' 
+    : '<i class="fa fa-refresh"></i>';
+
+// Toggle the repeat mode when the button is clicked
+repeatButton.addEventListener('click', () => {
+    // Toggle the checkbox state manually
+    repeatCheckbox.checked = !repeatCheckbox.checked;
+    console.log("Repeat checkbox state after toggle:", repeatCheckbox.checked);
+
+
+    // Change the icon based on the new state
+    if (repeatCheckbox.checked) {
+        repeatIcon.innerHTML = '<i class="fa fa-remove"></i>'; // Icon for repeat ON
+        console.log("🔁 Repeat mode is ON");
+    } else {
+        repeatIcon.innerHTML = '<i class="fa fa-refresh"></i>'; // Icon for repeat OFF
+        console.log("🔁 Repeat mode is OFF");
+    }
 });
 
 audioPlayer.addEventListener('ended', () => {
-    if (repeatCheckbox.checked) playSong(currentSongIndex);
-    else {
+    console.log("Song ended. Repeat mode: ", repeatCheckbox.checked); 
+    if (repeatCheckbox.checked) {
+        console.log("Repeating current song...");
+
+        playSong(currentSongIndex); // Replay current song
+    } else {
+        console.log("Moving to next song...");
         currentSongIndex++;
-        if (currentSongIndex >= filteredSongTitles.length) currentSongIndex = 0;
-        playSong(currentSongIndex);
+        if (currentSongIndex >= Object.keys(playlist).length) {
+            currentSongIndex = 0; // Wrap around to the first song
+        }
+        playSong(currentSongIndex); // Play next
     }
 });
 
-repeatIcon.innerHTML = repeatCheckbox.checked ? '<i class="fa fa-remove"></i>' : '<i class="fa fa-refresh"></i>';
-repeatIcon.addEventListener('click', () => {
-    repeatCheckbox.checked = !repeatCheckbox.checked;
-    repeatIcon.innerHTML = repeatCheckbox.checked ? '<i class="fa fa-remove"></i>' : '<i class="fa fa-refresh"></i>';
-});
+randomSongButton.addEventListener('click', () => {
+    // Generate a random index within the bounds of the playlist length
+    currentSongIndex = Math.floor(Math.random() * Object.keys(playlist).length);
 
-// Update playlist when filters change
-document.querySelectorAll('.filter-button input').forEach(input => {
-    input.addEventListener('change', populatePlaylist);
-});
+    console.log("Playing random song at index:", currentSongIndex); // Debugging log
 
-
-
-function populateRandomSongs() {
-    const container = document.querySelector('.random-song-container');
-    container.innerHTML = '<h2>Random Song Recommendations</h2>'; // header
-
-    const songTitles = Object.keys(playlist);
-    const randomSongs = [];
-
-    // pick 4 unique random songs
-    while (randomSongs.length < 4 && randomSongs.length < songTitles.length) {
-        const randIndex = Math.floor(Math.random() * songTitles.length);
-        const title = songTitles[randIndex];
-        if (!randomSongs.includes(title)) randomSongs.push(title);
-    }
-
-    randomSongs.forEach(title => {
-        const song = playlist[title];
-        const [songPath] = song;
-
-        const item = document.createElement('div');
-        item.classList.add('song-item');
-        item.style.width = '220px'; // smaller for random container
-        item.style.height = '120px';
-        item.style.backgroundImage = `url('albumArt/${songPath}.webp')`;
-
-        item.innerHTML = `
-            <div class="song-description">
-                <h5 class="song-title">${title.split(' - ')[0]}</h5>
-                <p class="artist-name">${title.split(' - ')[1]}</p>
-            </div>
-        `;
-
-        // click plays song immediately
-        item.addEventListener('click', () => {
-            playSongByTitle(title);
-            showSongInfoByTitle(title);
-        });
-
-        container.appendChild(item);
-    });
-
-    
-}
-
-// helper function to play song by title
-function playSongByTitle(songName) {
-    const song = playlist[songName];
-    if (!song) return;
-
-    const [songPath] = song;
-    const audioPath = `music/${songPath}.mp3`;
-
-    audioPlayer.src = audioPath;
-    audioPlayer.load();
-    audioPlayer.play();
-    updatePlayPauseIcon();
-
-    const [title, artist] = songName.split(" - ");
-    selectedSongElement.textContent = title.trim();
-    selectedSongArtistElement.textContent = artist?.trim() || "Unknown Artist";
-    albumArtElement.src = `albumArt/${songPath}.webp`;
-
-    loadLyrics(songPath);
-
-}
-
-// ======== FORMAT TIME FUNCTION ========
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-}
-
-// ======== UPDATE CURRENT TIME & TOTAL DURATION ========
-audioPlayer.addEventListener('loadedmetadata', () => {
-    // When audio loads, show total duration
-    const totalDuration = formatTime(audioPlayer.duration);
-    audioDurationElement.textContent = `0:00 | ${totalDuration}`;
-});
-
-audioPlayer.addEventListener('timeupdate', () => {
-    if (!isNaN(audioPlayer.currentTime) && !isNaN(audioPlayer.duration)) {
-        const currentTime = formatTime(audioPlayer.currentTime);
-        const totalDuration = formatTime(audioPlayer.duration);
-        audioDurationElement.textContent = `${currentTime} | ${totalDuration}`;
-    }
+    // Play the song at the random index
+    playSong(currentSongIndex);
 });
 
 
-function showSongInfo(index) {
-    // use the globally updated filteredSongTitles
-    const songName = filteredSongTitles[index];
-    const songData = playlist[songName];
-    if (!songData) return; // safety check
-  
-    const artistEl = document.getElementById("selected-song-artist");
-    const tagContainer = document.getElementById("song-tags");
-  
-    // Update artist/song info
-    artistEl.textContent = songName;
-  
-    // Update tags
-    tagContainer.innerHTML = ""; // clear previous tags
-    const tags = Array.isArray(songData[2]) ? songData[2] : [];
-    tags.forEach(tag => {
-        const span = document.createElement("span");
-        span.textContent = tag;
-        span.classList.add("tag"); // style pill look with CSS
-        tagContainer.appendChild(span);
-    });
-}
-
-function showSongInfoByTitle(title) {
-    // Use the globally defined playlist
-    const songData = playlist[title];
-    if (!songData) return; // safety check
-
-    const artistEl = document.getElementById("selected-song-artist");
-    const tagContainer = document.getElementById("song-tags");
-
-    // Update artist/song info
-    artistEl.textContent = title;
-
-    // Update tags
-    tagContainer.innerHTML = ""; // clear previous tags
-    const tags = Array.isArray(songData[2]) ? songData[2] : [];
-    tags.forEach(tag => {
-        const span = document.createElement("span");
-        span.textContent = tag;
-        span.classList.add("tag"); // style pill look with CSS
-        tagContainer.appendChild(span);
-    });
-}
 
 
 
-window.onload = () => {
-    populatePlaylist(); // populate filteredSongTitles first
-    populateRandomSongs();
 
-
-
-    const initialSongName = "卷珠帘 - Kiryo"; // match the key in your playlist
-    const initialIndex = filteredSongTitles.findIndex(title => title.includes(initialSongName));
-
-    if (initialIndex !== -1) {
-        currentSongIndex = initialIndex;
-        playSong(currentSongIndex);
-    }
-};
-
-
-// Optionally, refresh random songs on button click or interval
-
-
-// ======== AUDIO VISUALIZER ========
-const canvas = document.getElementById("visualizer");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas() {
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const source = audioCtx.createMediaElementSource(audioPlayer);
-const analyser = audioCtx.createAnalyser();
-analyser.fftSize = 512;
-const bufferLength = analyser.frequencyBinCount;
-const dataArray = new Uint8Array(bufferLength);
-
-// Connect graph: audio → analyser → speakers
-source.connect(analyser);
-analyser.connect(audioCtx.destination);
-
-let displayedHue = 240; // starting hue for bars (matches slider=0 = blue)
-
-function drawVisualizer() {
-  requestAnimationFrame(drawVisualizer);
-
-  analyser.getByteFrequencyData(dataArray);
-
-  // clear canvas
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-
-  const barWidth = (canvas.width / bufferLength) * 2.5;
-  let x = 0;
-
-  // target hue from slider
-  const hueTarget = parseInt(document.getElementById("hueSlider").value);
-
-  // smooth transition (like CSS filter)
-  displayedHue += (hueTarget - displayedHue) * 0.1; // smaller factor = slower
-
-  for (let i = 0; i < bufferLength; i++) {
-    const barHeight = dataArray[i] * 0.4;
-
-    // subtle variation per bar (optional)
-    const barHue = (displayedHue + 240)%360;
-    //ctx.fillStyle = `hsl(${barHue}, 80%, 50%)`;
-    ctx.fillStyle=`white`;
-    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-
-    x += barWidth + 1;
-  }
-}
-
-
-drawVisualizer();
-
-// Some browsers (Chrome) require user interaction before AudioContext runs
-document.body.addEventListener("click", () => {
-  if (audioCtx.state === "suspended") {
-    audioCtx.resume();
-  }
-});
-
-
-const sliderValue = parseInt(document.getElementById("hueSlider").value); 
-const baseHue = 240; // 0 on slider = blue
-const hue = (baseHue + sliderValue) % 360; // wraps around 0–359
+// Populate playlist on page load
+window.onload = populatePlaylist;
