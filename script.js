@@ -500,7 +500,7 @@ function playSong(index) {
     selectedSongElement.textContent = title.trim();
     selectedSongArtistElement.textContent = artist?.trim() || "Unknown Artist";
 
-    albumArtElement.src = `albumArt/${songPath}.png`;
+    albumArtElement.src = `albumArt/${songPath}.webp`;
 
     audioPlayer.onloadedmetadata = () => {
         audioDurationElement.textContent = formatTime(audioPlayer.duration);
@@ -666,7 +666,7 @@ function populatePlaylist() {
                 songItem.style.backgroundColor = "transparent";  // Assuming color can be applied here
 
                 const image = document.createElement('img');
-                image.src = `albumArt/${song[0]}.png`;  // Assuming the album image is in `song[0]`
+                image.src = `albumArt/${song[0]}.webp`;  // Assuming the album image is in `song[0]`
                 image.classList.add('song-image');
                 image.alt = title;
 
