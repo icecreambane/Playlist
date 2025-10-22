@@ -1,719 +1,878 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+html, body {
 
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    padding: 0; /* Ensure no padding on the body */
+    width: 100%; /* Ensure body takes full width */
+    height: 100%; /* Ensure body takes full height */
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
     overflow: hidden;
-    position: relative;
-   
+    background-color: #f6f6f6; /*f6f6f6*/
+    user-select: none;
+    transition: background-color 1s, color 1s;
+}
+
+
+.sitebody {
+    transform: scale(0.9);
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+    align-items: center; /* Center the items vertically */
+    padding-top: 50px;
+    min-height: 100vh; /* Ensures the body takes up at least the full height of the viewport */
+    position: relative; /* Allows absolute positioning for the containers */
+    flex-direction: column; /* Stack the containers vertically if you want */
+    width: 100%; /* Ensures the full width */
+    overflow: hidden; /* Prevents overflow if you want to keep the layout neat */
+}
+
+
+.container, .container-playlist {
+    position: absolute; /* Allows them to overlap */
+    
+    background: #f7f7f7;
     
 
-  }
-
-  /* Put the background on a pseudo-element */
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('bkg.jpg') no-repeat center/cover;
-
-    z-index: -1; /* keep it behind everything */
-    filter: hue-rotate(var(--hue));
-    transition: filter 0.2s linear;
-  }
-
-
-
-
-.sitebody{
-    height: 696px;
-    width: 1152px;
-    border-radius: 40px;
-    border: 0.5px solid rgb(154, 154, 154);
-    background-color: rgba(197, 197, 197, 0.1); /* semi-transparent  */
-    backdrop-filter: blur(25px); /* adds blur behind the element */
-    position: relative;
-    overflow: auto;
-    scale: 0.80;
 }
 
-.top-nav {
-    position: sticky;
-    top: 0;
-    height: 50px;
+.container{
+    border-radius: 15px;
     display: flex;
+    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 10px 20px;
-    gap: 20px;
-    flex-wrap: wrap;
-    z-index: 1000;
+    width: 422.5px;
+    height: 517.5px;
+    top: 100px; /* Adjust vertical position */
+    left: 80px; /* Adjust horizontal position */
+    box-shadow: 0px 0px 30px rgb(169, 169, 169);
+    z-index: 5;
+    transition: background-color 1s, color 1s;
 
-    /* Initial state: transparent */
-    background-color: transparent;
-    backdrop-filter: none;
-
-}
-
-.top-nav.scrolled {
-    background-color: rgba(0,0,0,0.7); /* semi-transparent when scrolled */
-    backdrop-filter: blur(5px);
+    border-left: 0.2px solid #aaaaaa;
+    border-top: 0.2px solid #aaaaaa;
+    border-right: 0.2px solid #aaaaaa;
 }
 
 
-.greeting-text{
-    color: white;
-    font-family: "Poppins", sans-serif;
-    font-weight: 100;
-    font-style: normal;
-    padding-left: 5px;
-    position: absolute;
-    top: 4px;
-    opacity: 0.8;
-}
-.greeting-text h2 {
-    transition: opacity 1s ease-in-out; /* smooth fade */
-    opacity: 1;
-  }
-  
-  .greeting-text h2.hidden {
-    opacity: 0;
-  }
-  
 
-.filters-container{
-    width: 800px;
-    height: 50px;
-    top: 10px;
-    right: 20px;
-    position: absolute;
-    background-color: transparent;
-    overflow: auto;
-    display: flex;                  /* horizontal layout */
-    gap: 10px;                      /* space between buttons */
-                 /* container padding */
-    overflow-x: auto;               /* horizontal scroll if overflow */
-    white-space: nowrap;            /* prevent wrapping */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0,0,0,0.3) transparent;
+.container-playlist {
 
-}
-
-.filter-button {
+    margin-bottom: 20px;
+    width: 539px;
+    height: 581px;
+    top: -350px; /* You can adjust this for overlap */
+    right: -600px; /* You can adjust this for overlap */
+    z-index: 0; /* Lower z-index to sit behind the container */
+    overflow-y: auto; /* Adds vertical scrolling */
+    overflow-x: hidden; /* Ensures horizontal overflow is hidden (if any) */
     display: flex;
-    align-items: center;
-    gap: 5px;
-    background-color:transparent;
-    color: white;
-    border: 0.5px solid rgba(255, 255, 255, 0.3);
+    flex-wrap: wrap; /* Items will wrap to the next line */
+    justify-content: space-between; /* Space out the items evenly */
+    gap: 3px; /* Adds space between the items */
+    padding: 16px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 10px 0px 30px rgb(169, 169, 169);
+    transition: background-color 1s, color 1s;
+
+
+    border-right: 0.2px solid #aaaaaa;
+    border-bottom: 0.2px solid #aaaaaa;
+}
+
+#albumArt{
+    box-shadow: 0px 0px 10px rgb(135, 135, 135);
+}
+
+
+.container #topbrowserbar{
+    background:#e9e9e9; /* e9e9e9 */
+    position: absolute;
+    z-index: 3;
+    height: 45px;
+    width: 422.5px;
+    top: 0;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    transition: background-color 1s, color 1s;
+
+    border-left: 0.2px solid #aaaaaa;
+    border-top: 0.2px solid #aaaaaa;
+    border-right: 0.2px solid #aaaaaa;
+    
+}
+
+#topbrowserbar-playlist{
+    background:#e9e9e9; /* e9e9e9 */
+    position: absolute;
+    z-index: 6;
+    height: 65px;
+    width: 162px;
+    top: -415px;
+    left: -135px;
+
+    border-left: 0.2px solid #aaaaaa;
+    border-top: 0.2px solid #aaaaaa;
+    border-right: 0.2px solid #aaaaaa;
+    border-top-left-radius: 15px;
+    transition: background-color 1s, color 1s;
+    
+
+}
+
+
+#browserdot1{
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    background: #ed6b5e; 
+    z-index: 5;
     border-radius: 20px;
-    padding: 6px 12px;
-    font-family: 'Prompt', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;                /* prevents shrinking in flex */
+}
+#browserdot2{
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    top: 15px;
+    left: 56.75px;
+    background: #f5c04f; 
+    z-index: 5;
+    border-radius: 20px;
+}
+#browserdot3{
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    top: 15px;
+    left: 79.5px;
+    background: #61c654; 
+    z-index: 5;
+    border-radius: 20px;
 }
 
-.filter-button input[type="checkbox"] {
-    display: none;                 /* hide the checkbox itself */
+#browserdot1-playlist{
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    background: #ed6b5e; 
+    z-index: 5;
+    border-radius: 20px;
+}
+#browserdot2-playlist{
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    top: 25px;
+    left: 56.75px;
+    background: #f5c04f; 
+    z-index: 5;
+    border-radius: 20px;
+}
+#browserdot3-playlist{
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    top: 25px;
+    left: 79.5px;
+    background: #61c654; 
+    z-index: 5;
+    border-radius: 20px;
+}
+
+
+
+#topbrowserbar-right{
+    background:#f2f2f2; /* e9e9e9 */
+    position: absolute;
+    z-index: 2;
+    height: 65px;
+    width: 571px;
+    top: -415px; /* You can adjust this for overlap */
+    right: -600px; /* You can adjust this for overlap */
+    border-top: 0.2px solid #aaaaaa;
+    border-left: 0.2px solid #aaaaaa;
+    border-bottom: 0.1px solid #aaaaaa;
+
+    border-right: 0.2px solid #aaaaaa;
+    border-top-right-radius: 15px;
+    transition: background-color 1s, color 1s;
+    
+
+}
+
+.song-item {
+    width: 30%; /* 4 items per row (100% / 4 = 25%, but we use 23% for spacing) */
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+    border-radius: 15px;
+    z-index: 20;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+}
+
+.song-description{
+    font-family: "Roboto", sans-serif;
+    text-align: left;
+}
+
+.song-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Maximum height for images to avoid overflow */
+    object-fit: contain; /* Ensures the image fits within the container without distortion */
+    border-radius: 15px;
+   
+}
+
+.song-item .song-image:hover{
+    cursor: pointer;
+}
+
+.song-title{
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+    margin-left: 0px;
+}
+.artist-name{
+    color: black;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.container .image{
+    position: absolute;
+    top: 77.5px;
+    width: 237.5px;
+    height: 237.5px;
+    border-radius: 20px;
+    z-index: 3;
+}
+
+
+.selected-song {
+    color: black;
+    z-index: 10;
+    position: absolute;
+    left: 92.5px;
+    text-align: left;
+    top: 315px;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+} 
+
+.selected-song-artist{
+    color: black;
+    z-index: 10;
+    left: 92.5px;
+    text-align: left;
+    position: absolute;
+    top: 335px;
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+    font-size: 12px;
+    padding-top: 20px;
+}
+
+.audio-duration{
+    text-align: right; 
+    color: #808080; 
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    position: absolute;
+    z-index: 9999;
+    top: 355px;
+    right: 92.5px;
+} 
+
+.container .song-text{
+    position: absolute;
+    font-family: sans-serif;
+    top: 320px;
+    color: black;
+    
+}
+
+.button-container .container-button{
+    z-index: 100;
+    outline: none;
+    transition: background-color 0.1s, color 0.1s;
+    
+}
+
+.button-container .container-button:hover{
+    cursor: pointer;
+    color: rgb(200, 200, 200);
+    transition: 0.1s;
+
+} 
+
+.container .button-container {
+    display: flex;
+    flex-direction: row; /* Align buttons horizontally */
+    gap: 24px; /* Space between buttons */
+    position: absolute;
+    top: 410px;
+    align-items: center;
+}
+
+.button-container .container-button{
+    border: none;
+    color: #808080;
+    background: transparent;
+    box-sizing: border-box;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+#playPauseButton{
+    font-size: 28px;
+}
+#playPauseButton:hover{
+    color: rgb(196, 196, 196);
+}
+
+#nextSongButton{
+    font-size: 20px;
+    box-sizing: border-box;
+    flex-grow: 0; 
+}
+#prevSongButton{
+    font-size: 20px;
+    box-sizing: border-box;
+    flex-grow: 0; 
+}
+
+#randomSongButton{
+    font-size: 20px;
+    box-sizing: border-box;
+    flex-grow: 0; 
+}
+#repeatButtonIcon{
+    font-size: 20px;
+    box-sizing: border-box;
+    flex-grow: 0; 
+}
+
+.filter-container{
+    background-color: none;
+    z-index: 0; /* e9e9e9 */
+    position: absolute;
+    height: 605.75px;
+    width: 152px;
+    top: -370px;
+    left: -135px;
+    font-family: "Roboto", sans-serif;
+
+    border-bottom-left-radius: 15px;
+  
+    border-bottom: 0.2px solid #aaaaaa;
+
+    padding-left: 10px;
+    
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-weight: normal;
+    transition: background-color 1s, color 1s;
+
+   
+    border-right: 0.2px solid #aaaaaa;
+
+}
+
+
+.filterButtonHolder {
+    width: 161.5px;
+    height: 605px; /* Added height to ensure scrolling space */
+    background: #e9e9e9; /*e9e9e9 */
+border-bottom-left-radius: 15px;
+border-right: 0.2px solid #aaaaaa;
+border-bottom: 0.2px solid #aaaaaa;
+border-left: 0.2px solid #aaaaaa;
+    overflow-y: auto; /* Keeps vertical scrolling enabled */
+    flex-direction: column;
+    margin-left: -10px;
+    gap: 0px;
+    background-clip: border-box;
+
+    display: flex;
+    align-items: center;
+    -ms-flex-item-align: center;
+
+    padding-top: 20px;
+    top: 8px;
+    position: absolute;
+    transition: background-color 1s, color 1s;
+    row-gap: 0px;
+
+    box-shadow:
+    -15px 0 20px -10px rgb(169,169,169),  /* Left */
+     0 -15px 20px -10px rgb(169,169,169), /* Top */
+     0 15px 20px -10px rgb(169,169,169);  /* Bottom */
+
+}
+
+
+.filter-button{
+    display: inline;
+    transition: background-color 0.3s, color 1s;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+  
+    cursor: pointer;
+    text-align: left;
+    width: 80%;
+    border-radius: 8px;
+    background-color: transparent;
+    line-height: 1px;
+    font-size: 14.7px;
+    user-select: none;
+    border: none;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+}
+
+.filter-button input {
+    display: none; /* Hide the actual checkbox */
+    margin: 0;
 }
 
 .filter-button span {
     display: flex;
+    gap: 0px;
     align-items: center;
-    gap: 5px;
+    padding: 8px 25px 8px 20px;
+    margin: 0;
+}
+.filter-button input:checked +span {
+    background-color: #ced2d1;
+    border-radius: 8px;
 }
 
 .filter-button:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.filter-button input[type="checkbox"]:checked + span {
-    background-color: rgba(79, 79, 79, 0.6);
-    color: white;
-    border-radius: 20px;
-    padding: 6px 12px;
+   
+    cursor: pointer;
 }
 
 
-
-
-
-.random-song-container {
-    height: 400px;
-    width: 290px;
-    top: 470px;
-    
-    left: 20px;
-    background: radial-gradient(
-        circle at top right,
-        rgba(255, 255, 255, 0.3),
-        rgba(154, 154, 154, 0.05) 70%
-      );
-    backdrop-filter: blur(15px);
-    /* border: 0.5px solid rgb(154, 154, 154); */
-    font-family: "Poppins", sans-serif;
-    border-radius: 30px;
-    position: absolute;
-    overflow: auto;
-    gap: 15px;
-
-    display: grid; /* use grid layout */
-    grid-template-columns: 1fr; /* one column vertically */
-    justify-items: center; /* center horizontally */
-
-}
-
-.random-song-container .song-item{
-    padding-bottom: 100px;
-    margin-bottom: 10px;
-}
-
-.random-song-container h2 {
-    color: white;
-    justify-self: start; 
-    font-size: 20px;
-    padding-left: 25px;
-    margin-bottom: 10px;
-    font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  top: 10px;
-  position: relative;
-  opacity: 0.9;
-}
-
-
-.lyrics-container{
-    height: 375px;
-    width: 290px;
-    top: 75px;
-    left: 20px;
-    background: radial-gradient(
-        circle at bottom right,
-        rgba(255, 255, 255, 0.3),
-        rgba(154, 154, 154, 0.05) 70%
-      );
-      
-    backdrop-filter: blur(15px);
-    /* border: 0.5px solid rgb(154, 154, 154);*/
-    border-radius: 30px;
-    position: absolute;
-    overflow: auto;
-}
-.lyrics-container h3{
-    color: white;
-    font-family: "Poppins", sans-serif;
-    padding-left: 25px;
-    opacity: 0.9;
-    
-
-}
-.lyrics-container p{
-    font-family: "Poppins", sans-serif;
-    padding-left: 25px;
-    color: white;
-    padding-right: 25px;
-    opacity: 0.8;
-}
-
-.current-song-container {
-    position: absolute;
-    height: 375px;
-    width: 800px;
-    top: 75px;
-    right: 20px;
-    /* border: 0.5px solid rgb(154, 154, 154);*/
-    border-radius: 30px;
-    overflow: hidden;
-    background-color: black;
-    background-clip: padding-box; 
-    background-size: 110% 110%; 
-
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-
-.current-song-container::before {
-    content: "";
-    position: absolute;
-    top: -2px;    /* bleed out slightly */
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background:
-        linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 40%),
-        url('albumArt/example.png') center/cover no-repeat;
-    z-index: 0;
-}
-
-/* Blur + fade overlay */
-.current-song-container::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.dropdown{
     width: 100%;
-    height: 200px;
-    pointer-events: none;
-    z-index: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center; /* Centers the dropdown within the parent */
+    top: 360px;
+}
 
-    /* stack two layers: solid black + blurred fade */
-    background: linear-gradient(to top,
-        rgba(0,0,0,1) 0%,       /* full black at bottom */
-        rgba(0,0,0,1) 10%,      /* keep black for a bit */
-        rgba(0,0,0,0) 100%      /* fade upward */
-    );
-
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+#songSelect {
+    padding: 15px;
+    font-size: 16px;
+    width: 50%; /* Full width of dropdown */
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    font-family: "Roboto", sans-serif;
+    outline: none;
+    transition: 1s;
+}
+#songSelect:hover{
+    cursor: pointer; 
+    background-color: rgb(224, 224, 224);
+    color: black;
 }
 
 
 
 
+@media only screen and (max-width: 1280px) {
+    body{
+
+        overscroll-behavior-y: auto;
+        overflow: auto;
+        height: auto;
+        max-height: 100vh;
+    }
+    html{
+        height: auto;
+        overflow: auto;
+        max-height: 100vh;
+    }
+
+    .container-playlist{
+        overflow-y: auto;
+    margin-bottom: 20px;
+    top: 720px;
+    }
+
+    #topbrowserbar-right{
+        top: 245px;
+        width: 437px;
+        left: -150px;
+    }
+
+    #topbrowserbar-playlist{
+        top: 245px;
+        left: -313px;
+        
+    }
+
+    .sitebody{
+        overflow: auto;
+    }
+
+    .container{
+        left: 20%;
+    }
+
+    .container-playlist{
+        width: 405px;
+        height: 545px;
+        top: 310px;
+        left: -150px;
+    }
+
+    .filter-container{
+        top: 300px;
+        left: -313px;
+        height: 560px;
+        border-radius: 15px;
+    }
+    .filterButtonHolder{
+        height: 560px;
+    }
+
+}
 
 
+@media only screen and (max-width: 600px){
+    body{
 
+    }
+    .container{
+        left: 8%;
+    }
+
+    .container-playlist{
+        width: 299px;
+        left: -100px;
+        height: 500px;
+    }
+    #topbrowserbar-right{
+        width: 330px;
+        left: -100px;
+    }
+    .filter-container{
+        left: -262px;
+        height: 513px;
+    }
+    .filterButtonHolder{
+        height: 513px;
   
+    }
+    #topbrowserbar-playlist{
+        left: -262px;
 
-#hueSlider {
-    z-index: 5;
-    position: absolute;
-    right: 5px;
-    top: 60px;
-    height: 15px;   /* track thickness */
-    width: 200px;   /* track length */
-    transform: rotate(-90deg);
-    transform-origin: bottom right;
-    -webkit-appearance: none; /* remove default styling */
-    background:  rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
+    }
+}
+
+
+.rightside{
+    position: relative;
+    height: auto;
+    width: auto;
+
+}
+
+
+.radio-item{
+    padding: 10px;
+    right: 0;
+    font-family:"Roboto", sans-serif;
     cursor: pointer;
+    border-radius: 20px;
 }
 
-/* WebKit track (Chrome, Safari, Edge) */
-#hueSlider::-webkit-slider-runnable-track {
-    height: 12px;
-    border-radius: 6px;
-    background: inherit; /* use parent gradient */
-}
-
-/* Firefox track */
-#hueSlider::-moz-range-track {
-    height: 12px;
-    border-radius: 6px;
-background: rgba(255, 255, 255, 0.3);}
-
-/* WebKit thumb */
-#hueSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    background-color: white; /* solid white thumb */
-
-    border-radius: 50%;
-    cursor: grab;
-    margin-top: -1px; /* align thumb with track */
-    box-shadow: none;
-}
-
-/* Firefox thumb */
-#hueSlider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: none;
+input[type="radio"] {
+    display: none;
+    color: white;
 }
 
 
-#albumArt {
+
+label {
+    cursor: pointer;  /* Change the cursor when hovering over the label */
+}
+
+
+.playing {
+    font-weight: bold;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+}
+
+.song-item.playing {
+    font-weight: bold;
+    background-color: #e0e0e0; /* Light gray */
+    transition: 0.3s; 
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    top: 250px;
+}
+
+/* Hidden checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+/* Slider */
+.slider {
     position: absolute;
-    transform: translate(-1%, -1%);
+    cursor: pointer; 
     top: 0;
     left: 0;
-    width: 110%;
-    height: 110%;
-    object-fit: cover;   /* fills the container without repeating */
-    z-index: 0;          /* behind controls and text */
-    transition: all 0.3s ease;
-    filter: blur(0px);
-}
-
-/* Overlay content */
-#selected-song-container {
-    position: relative;
-    z-index: 1;           /* in front of album art */
-    color: white;         /* text contrast */
-    padding: 25px;
-    margin-bottom: 60px;  /* space above controls */
-
-}
-
-#visualizer {
-    position: absolute;
-    background: transparent;
-    bottom: -300px;
-    left: -50px;
-    width: 900px;
-    height: 200px;   /* fills the container */
-    z-index: 0;     /* behind everything */
-    opacity: 0.9;   /* so it doesn’t overpower text */
-  }
-
-.controls-container {
-    display: inline-flex;      /* shrink container to content width */
-    flex-direction: column;    /* stack buttons and seekbar vertically */
-    align-items: flex-start;   /* left-align everything inside */
-    gap: 10px;  
-    
-}
-
-.controls-right {
-    display: flex;
-    flex-direction: row;   /* buttons in a horizontal line */
-    align-items: center;   /* vertically center buttons */
-    gap: 10px;             /* space between buttons */
-    z-index: 100;
-    margin-left: -420px;
-    border: none;              /* remove border */
-    outline: none;
-}
-/* Position the song info above the controls */
-
-
-#selected-song{
-    color: white;
-    font-family: "Poppins", sans-serif;
-    font-weight: 700;
-    text-shadow: 2px 2px 5px black;
-    font-size: 50px;
-    position: absolute;
-    top: 140px;
-}
-
-
-
-/* Controls at the bottom */
-.controls-container {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    width: 100%;
-    display: flex;
-
-    gap: 5px;
-    
-    padding: 20px;
-
-
-    display: flex;
-    align-items: center;  /* vertical centering */
-    justify-content: flex-start
-}
-
-
-.playlist-group{
-    overflow: auto;
-
-}
-
-
-
-#youmaylike{
-    position: absolute;
-    font-family: "Poppins", sans-serif;
-  font-weight: 700;
-    color: white;
-    top: 460px;
-    right: 640px;
-    opacity: 0.8;
-
-
-}
-
-.playlist-container{
-    position: absolute;
-    background-color: transparent;
-    right: 10px;
-    top: 530px;
-    width: 800px;
-    height: 400px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columns per row */
-    grid-auto-rows: 175px;
-    gap: 10px; /* space between songs */
-    overflow: auto;
-    padding: 10px;
-}
-
-
-.song-item {
-    position: relative;
-    width: 170px;
-    height: 150px;
-    border-radius: 25px;
-    cursor: pointer;
-    overflow: auto;
-    display: flex;
-    align-items: flex-end; /* pushes text to bottom */
-    justify-content: flex-start; /* left align content horizontally */
-    padding: 10px; /* left + bottom padding */
-    color: white;
-    font-family: "Poppins", sans-serif;
-    text-shadow: 2px 2px 3px black;
-    text-align: left;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.song-description {
-    width: 100%;
-    /* already positioned bottom with absolute if needed */
-    position: absolute;
+    right: 0;
     bottom: 0;
-    left: 0;
-    padding: 10px 15px; /* left/right padding */
-    box-sizing: border-box;
-    background: linear-gradient(to top, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
-    text-align: left;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 30px;
+}
+.slider:hover{
+    cursor: grab;
+}
+/* Circle inside the slider */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+.slider:hover{
+    background-color: rgb(178, 178, 178);
+}
+.slider:before:hover{
+    background-color: rgb(227, 227, 227);
 }
 
 
-.song-item:hover {
-    transform: scale(0.95);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+/* Dark mode - move the circle to the right */
+input:checked + .slider {
+    background-color: #767676;
 }
-
-.song-item h5,
-.song-item p {
-    margin: 0;   /* remove default top/bottom margin */
-    padding: 0;
-    text-align: left;
+input:checked + .slider:before {
+    transform: translateX(30px);
 }
-
-
-
-.song-image {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    
+input:checked + .slider:hover {
+    background-color: rgb(74, 74, 74);
 }
 
 
-.song-title {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.artist-name {
-    font-size: 14px;
-    color: #cccccc;
-}
-
-
-.controls-container button {
-
-    background: radial-gradient(
-        circle at bottom right,
-        rgba(255, 255, 255, 0.25),
-        rgba(255, 255, 255, 0.4) 70%
-    );
-
-
-    backdrop-filter: blur(15px);
-    color: white;
-    padding: 10px 20px;       /* makes them pill-shaped */
-    border-radius: 50px;      /* large radius = pill shape */
-    font-size: 18px;
+#seekbar{
+    -webkit-appearance: none; 
+    -moz-appearance: none;   
+    appearance: none;
+    position: absolute;
+    top: 392.5px;
+    max-width: 237.5px;
+    height: 2px;
+    background: #808080;
+    transition: background-color 1s, color 1s;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: "Poppins", sans-serif;
-    border: none;              /* remove border */
-    outline: none;
 }
 
-.controls-container button:hover {
-    background: radial-gradient(
-        circle at bottom right,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0.2) 70%
-    );
-
-}
-
-
-
-/* Optional: style the repeat checkbox pill */
-#repeat-button span {
-    display: inline-flex;
-    background: radial-gradient(
-        circle at bottom right,
-        rgba(255, 255, 255, 0.25),
-        rgba(255, 255, 255, 0.4) 70%
-    );
-
-   
-    align-items: center;
-    justify-content: center;
-    padding: 14px 20px;
-    font-size: 18px;
-    border-radius: 50px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(15px);
-}
-
-#repeat-button span:hover {
-    background: radial-gradient(
-        circle at bottom right,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0.2) 70%
-    );
-
-}
-
-#playPauseButton {
-    background-color: rgba(255, 255, 255);
-    
-    color: black;
-
-}
-
-#playPauseButton:hover {
-    background-color: rgb(255, 255, 255,0.3);
-
-}
-
-
-.song-info {
-    display: flex;             /* puts children in a row */
-    justify-content: left; /* pushes artist left, duration right */
-    align-items: center;       /* vertical alignment */
-    gap: 10px;                 /* optional spacing between them */
-    top: 140px;
-    position: relative;
-}
-
-.song-tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  
-  .song-tags span {
-    margin-top: -1px;
-    padding: 4px 10px;
-    border-radius: 999px; /* pill shape */
-    font-size: 12px;
-    font-weight: 500;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: white;
-    font-family: "Poppins",sans-serif;
-  }
-
-#selected-song-artist{
-    font-size: 20px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-
-}
-
-/* Container */
-
-#audio-duration{
-    font-size: 15px;
-    font-family: "Poppins", sans-serif;
-    line-height: 1;          /* ensures no extra vertical spacing */
-    z-index: 100;
-    position: relative;
-    color: white;
-}
-
-#seekbar {
-    -webkit-appearance: none;  /* remove default styles */
-    width: 90%;
-    height: 1px;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.9);
-    outline: none;
-    z-index: 100;
-    cursor: pointer;
-
-    position: relative;
-    left: -30px;
-    top: 20px;
-}
-
-/* Track */
-#seekbar::-webkit-slider-runnable-track {
-    height: 8px;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-#seekbar::-moz-range-track {
-    height: 8px;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-/* Thumb (the draggable part) */
 #seekbar::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
+    appearance: none;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.9);   
-    border: 0.5px solid white;
-    margin-top: -2px;       /* center thumb vertically on track */
+    cursor: grab;
+    background: #808080;
+    box-shadow: black;
+    cursor: grab;
+    transition: 0.3s ease;
+}
+
+#seekbar::-webkit-slider-thumb:hover{
+    box-shadow: 0 0 0px 2px #808080;
+   
+}
+
+#seekbar::-webkit-slider-thumb:active{
+    cursor: grabbing;
+}
+
+
+
+
+
+.light-mode {
+    background-color: #fff;
+    color: #000;
+    transition: 1s;
+}
+
+
+
+
+.dark-mode{
+    transition: 1s;
+    background-color: #121212;
+    color: #fff;
+}
+.dark-mode html, .dark-mode body {
+    background-color: #121212;
+    color: #fff;
+}
+.dark-mode .container{
+    transition: 1s;
+    background: #2b2b2b;
+    color: #fff;
+    
+    box-shadow: 0px 0px 5px rgb(37, 37, 37);
+}
+
+.dark-mode #albumArt{
+    box-shadow: none;
+    /* box-shadow: 0px 0px 10px rgb(0, 0, 0);*/
+}
+
+.dark-mode .filter-button{
+
+}
+.dark-mode #topbrowserbar{
+    transition: 1s;
+    background: #383838;
+}
+
+.dark-mode .container-playlist{
+    transition: 1s;
+    background: #2b2b2b;
+    color: #fff;
+    box-shadow: 0px 0px 15px rgb(37, 37, 37);
+}
+
+.dark-mode #topbrowserbar-right{
+    background-color: #383838;
+    border-left: none;
+    border-bottom: none;
+}
+
+.dark-mode .filterButtonHolder{
+    box-shadow: 0px 0px 30px black;
+}
+
+.dark-mode #topbrowserbar-playlist{
+    transition: 1s;
+    background: #383838;
+    
+}
+.dark-mode .filter-container{
+    transition: 1s;
+    background-color: #2b2b2b;
+
+}
+.dark-mode .filterButtonHolder{
+    transition: 1s;
+    background: #2b2b2b;
+}
+
+.dark-mode .filter-button{
+    transition: 1s;
+    border-color: #7c7b7d;
+    color: #a6a5a7;
+}
+
+.dark-mode .filter-button input:checked +span {
+    transition: 1s;
+    background-color: #393939;
+    border-radius: 8px;
+}
+.dark-mode .button-container .container-button{
+    transition: 1s;
+    color: #7c7b7d;
+}
+
+.dark-mode #seekbar{
+    background-color: #7c7b7d;
+}
+.dark-mode #seekbar::-webkit-slider-thumb{
+    background-color: #7c7b7d;
+}
+
+.dark-mode #selected-song{
+    color: #7c7b7d;
+}
+
+.dark-mode #selected-song-artist{
+    color: #7c7b7d;
+}
+.dark-mode #song-item{
+    color: #7c7b7d;
+}
+
+.dark-mode .song-description{
+    color: #7c7b7d;
+}
+.dark-mode .audio-duration{
+    color: #7c7b7d;
+    transition: 1s;
+}
+
+.dark-mode .light-dark-toggle{
+    color: #7c7b7d;
+}
+.dark-mode .song-title{
+    color: #7c7b7d;
+}
+.dark-mode .artist-name{
+    color: #7c7b7d;
+}
+
+.light-dark-toggle{
+    color: #808080;
+    font-size: 16px;
+    z-index: 15;
+    top:318px;
+    right:90px;
+    position: absolute;
+}
+.light-dark-toggle :hover{
     cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-#seekbar::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-#seekbar::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: none;
-    border: 1px solid white;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-#seekbar::-moz-range-thumb:hover {
-    transform: scale(1.2);
-}
-
-/* Optional: filled portion of the track (Webkit only) */
-#seekbar::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #0078ff 0%, #0078ff var(--seek-value), rgba(255,255,255,0.3) var(--seek-value), rgba(255,255,255,0.3) 100%);
 }
 
 
+
+
+/*
+#time {
+    position: fixed;          
+    top: 372px;               
+    right:569px;            
+    z-index: 1;            
+    background: transparent;  
+    font-size: 108px;        
+    font-family: "Questrial", sans-serif;
+    font-weight: bolder;
+    letter-spacing: -5px;
+}
+*/
