@@ -426,14 +426,18 @@ const playlist = {
     "ECHO (Remix) - NOVA-X": ["ECHO_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
     "What's wrong - T-ARA": ["Whats_wrong_T-ARA","rgb(251 114 168)",["Korean","Pop"]],
     "What's wrong - BAE173": ["Whats_wrong_BAE173","rgb(251 114 168)",["Korean","Pop"]],
-    "Annyeong - NOVA-X": ["Annyeong_NOVAX","rgb(251 114 168)",["Korean","Pop"]]
+    "Annyeong - NOVA-X": ["Annyeong_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
+    "bittersweet - Madison Beer": ["bittersweet_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
+    "yes baby - Madison Beer": ["yes_baby_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
+    "Make You Mine - Madison Beer": ["MakeYouMine_Madison_Beer","rgb(251 114 168)",["English","Pop"]]
 
 
 
 
 
 
-    //Annyeong_NOVAX
+
+    //MakeYouMine_Madison_Beer
 };
 
 
