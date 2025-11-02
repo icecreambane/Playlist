@@ -637,6 +637,7 @@ function populatePlaylist() {
     if (document.getElementById('ENHYPEN-filter').checked) filters.push('ENHYPEN');
     if (document.getElementById('TXT-filter').checked) filters.push('TXT');
     if (document.getElementById('ONEUS-filter').checked) filters.push('ONEUS');
+    if (document.getElementById('ONEUS-filter').checked) filters.push('&TEAM');
 
     //if (document.getElementById('favorites-filter').checked) filters.push('Favorites');
 
