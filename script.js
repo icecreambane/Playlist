@@ -441,6 +441,8 @@ const playlist = {
 
     //沈园外_YueYue
 };
+
+
 console.log("Playlist Length:", Object.keys(playlist).length);
 
 // ========== ELEMENT REFERENCES ==========
@@ -464,15 +466,10 @@ let filteredSongList = []; // stores the currently filtered songs
 // ========== PLAYBACK FUNCTIONS ==========
 
 function playSong(index) {
+    const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
     currentSongIndex = index;
-    console.log("this song is ", currentSongIndex);
-
-    const songNames = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
-    const songNameAtIndex = songNames[index];
+    const songNameAtIndex = songs[index];
     const songPath = playlist[songNameAtIndex][0];
-
-    console.log(songPath);
-
     const audioPath = `music/${songPath}.mp3`;
 
     if (!audioPlayer.paused) {
@@ -512,13 +509,46 @@ function updatePlayPauseIcon() {
         : '<i class="fa fa-pause"></i>';
 }
 
-// Filters
+// ========== FILTER SYSTEM ==========
+
+// Normalize filter IDs → tag names
+function normalizeFilterId(id) {
+    const map = {
+        'recents': 'Recents',
+        'instrumental': 'Instrumental',
+        'epic': 'Epic',
+        'remix': 'Remix',
+        'samuelkim': 'SamuelKim',
+        'theme': 'Theme/OST',
+        'chinese': 'Chinese',
+        'canto': 'Canto',
+        'english': 'English',
+        'jpn': 'Japanese',
+        'anime': 'Anime',
+        'korean': 'Korean',
+        'pop': 'Pop',
+        'ateez': 'ATEEZ',
+        'geodash': 'Geodash',
+        'swedish': 'Swedish',
+        'russian': 'Russian',
+        'tsfh': 'TSFH',
+        'filipino': 'Filipino',
+        'bap': 'B.A.P.',
+        'infinite': 'INFINITE',
+        'enhypen': 'ENHYPEN',
+        'txt': 'TXT',
+        'oneus': 'ONEUS',
+        'team': '&TEAM'
+    };
+    return map[id.toLowerCase()] || id;
+}
+
 function getSelectedFilters() {
     const selectedFilters = [];
     const filterElements = document.querySelectorAll('#filterButtonsHolder input[type="checkbox"]:checked');
     filterElements.forEach(input => {
         const filterId = input.id.replace('-filter', '');
-        selectedFilters.push(filterId);
+        selectedFilters.push(normalizeFilterId(filterId));
     });
     console.log('Selected Filters:', selectedFilters);
     return selectedFilters;
@@ -526,17 +556,15 @@ function getSelectedFilters() {
 
 function setupFilterListeners() {
     document.querySelectorAll('#filterButtonsHolder input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            populatePlaylist();
-        });
+        checkbox.addEventListener('change', populatePlaylist);
     });
 }
 
 // Add "Recents" tag to last 12 songs
-function addRecentsTagToLast10() {
+function addRecentsTagToLast12() {
     const songTitles = Object.keys(playlist);
-    const last10Songs = songTitles.slice(-12);
-    last10Songs.forEach(title => {
+    const last12Songs = songTitles.slice(-12);
+    last12Songs.forEach(title => {
         const song = playlist[title];
         if (!song[2].includes('Recents')) {
             song[2].push('Recents');
@@ -544,81 +572,62 @@ function addRecentsTagToLast10() {
     });
 }
 
-// Populate playlist container + dropdown
+// Populate playlist container
 function populatePlaylist() {
     const container = document.getElementById('container-playlist');
     const dropdown = document.getElementById('songSelect');
     container.innerHTML = '';
     dropdown.innerHTML = '';
 
-    const filters = [];
-    const filterIds = [
-        'Recents', 'Instrumental', 'Epic', 'Remix', 'SamuelKim', 'Theme/OST',
-        'Chinese', 'Canto', 'English', 'Jpn', 'anime', 'Korean', 'Pop',
-        'ATEEZ', 'Geodash', 'Swedish', 'Russian', 'TSFH', 'Filipino',
-        'BAP', 'INFINITE', 'ENHYPEN', 'TXT', 'ONEUS', 'TEAM'
-    ];
-
-    filterIds.forEach(id => {
-        if (document.getElementById(`${id}-filter`)?.checked) filters.push(id === 'theme' ? 'Theme/OST' : id);
-    });
-
-    console.log("FILTERS CHOSEN:", filters);
+    const filters = getSelectedFilters();
+    filteredSongList = [];
     let anyMatch = false;
-    filteredSongList = []; // reset filtered list
 
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-    addRecentsTagToLast10();
+    addRecentsTagToLast12();
 
     for (const title in playlist) {
-        if (playlist.hasOwnProperty(title)) {
-            const song = playlist[title];
-            const songTags = song[2];
+        const song = playlist[title];
+        const songTags = song[2].map(tag => tag.toLowerCase());
+        const matchesFilters = filters.every(f => songTags.includes(f.toLowerCase()));
 
-            const matchesFilters = filters.every(filter => {
-                if (filter === 'Favorites') return favorites[title];
-                return songTags.includes(filter);
+        if (matchesFilters || filters.length === 0) {
+            filteredSongList.push(title);
+
+            const songItem = document.createElement('div');
+            songItem.classList.add('song-item');
+            songItem.style.backgroundColor = "transparent";
+
+            const image = document.createElement('img');
+            image.src = `albumArt/${song[0]}.webp`;
+            image.classList.add('song-image');
+            image.alt = title;
+
+            const description = document.createElement('div');
+            description.classList.add('song-description');
+
+            const [songTitleText, artistNameText] = title.split(' - ');
+
+            const songTitle = document.createElement('h5');
+            songTitle.textContent = songTitleText;
+            songTitle.classList.add('song-title');
+
+            const artistName = document.createElement('p');
+            artistName.textContent = artistNameText || '';
+            artistName.classList.add('artist-name');
+
+            description.appendChild(songTitle);
+            description.appendChild(artistName);
+            songItem.appendChild(image);
+            songItem.appendChild(description);
+
+            songItem.addEventListener('click', () => {
+                const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
+                currentSongIndex = songs.indexOf(title);
+                playSong(currentSongIndex);
             });
 
-            if (matchesFilters) {
-                filteredSongList.push(title); // add to filtered list
-
-                const songItem = document.createElement('div');
-                songItem.classList.add('song-item');
-                songItem.style.backgroundColor = "transparent";
-
-                const image = document.createElement('img');
-                image.src = `albumArt/${song[0]}.webp`;
-                image.classList.add('song-image');
-                image.alt = title;
-
-                const description = document.createElement('div');
-                description.classList.add('song-description');
-
-                const [songTitleText, artistNameText] = title.split(' - ');
-
-                const songTitle = document.createElement('h5');
-                songTitle.textContent = songTitleText;
-                songTitle.classList.add('song-title');
-
-                const artistName = document.createElement('p');
-                artistName.textContent = artistNameText || '';
-                artistName.classList.add('artist-name');
-
-                description.appendChild(songTitle);
-                description.appendChild(artistName);
-                songItem.appendChild(image);
-                songItem.appendChild(description);
-
-                songItem.addEventListener('click', () => {
-                    const songNames = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
-                    currentSongIndex = songNames.indexOf(title);
-                    playSong(currentSongIndex);
-                });
-
-                container.appendChild(songItem);
-                anyMatch = true;
-            }
+            container.appendChild(songItem);
+            anyMatch = true;
         }
     }
 
@@ -630,18 +639,10 @@ function populatePlaylist() {
     }
 }
 
-// Event listener to trigger populatePlaylist when a filter changes
-document.querySelectorAll('.filter-button input').forEach(input => {
-    input.addEventListener('change', populatePlaylist);
-});
-
 // ========== EVENT LISTENERS ==========
 playPauseButton.addEventListener('click', () => {
-    if (audioPlayer.paused) {
-        audioPlayer.play();
-    } else {
-        audioPlayer.pause();
-    }
+    if (audioPlayer.paused) audioPlayer.play();
+    else audioPlayer.pause();
     updatePlayPauseIcon();
 });
 
@@ -661,49 +662,34 @@ seekbar.addEventListener('input', () => {
 
 prevSongButton.addEventListener('click', () => {
     const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
-    currentSongIndex--;
-    if (currentSongIndex < 0) {
-        currentSongIndex = songs.length - 1;
-    }
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     playSong(currentSongIndex);
 });
 
 nextSongButton.addEventListener('click', () => {
     const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
-    currentSongIndex++;
-    if (currentSongIndex >= songs.length) {
-        currentSongIndex = 0;
-    }
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
     playSong(currentSongIndex);
 });
 
-const repeatButton = document.getElementById('repeatButtonIcon');
 repeatIcon.innerHTML = repeatCheckbox.checked
     ? '<i class="fa fa-remove"></i>'
     : '<i class="fa fa-refresh"></i>';
 
-repeatButton.addEventListener('click', () => {
+repeatIcon.addEventListener('click', () => {
     repeatCheckbox.checked = !repeatCheckbox.checked;
-    if (repeatCheckbox.checked) {
-        repeatIcon.innerHTML = '<i class="fa fa-remove"></i>';
-        console.log("🔁 Repeat mode is ON");
-    } else {
-        repeatIcon.innerHTML = '<i class="fa fa-refresh"></i>';
-        console.log("🔁 Repeat mode is OFF");
-    }
+    repeatIcon.innerHTML = repeatCheckbox.checked
+        ? '<i class="fa fa-remove"></i>'
+        : '<i class="fa fa-refresh"></i>';
+    console.log("🔁 Repeat mode:", repeatCheckbox.checked);
 });
 
 audioPlayer.addEventListener('ended', () => {
-    console.log("Song ended. Repeat mode:", repeatCheckbox.checked);
     const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
-
     if (repeatCheckbox.checked) {
         playSong(currentSongIndex);
     } else {
-        currentSongIndex++;
-        if (currentSongIndex >= songs.length) {
-            currentSongIndex = 0;
-        }
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
         playSong(currentSongIndex);
     }
 });
@@ -714,7 +700,7 @@ randomSongButton.addEventListener('click', () => {
     playSong(currentSongIndex);
 });
 
-// Populate playlist on page load
+// Initialize
 window.onload = () => {
     populatePlaylist();
     setupFilterListeners();
