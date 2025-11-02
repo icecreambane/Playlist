@@ -441,8 +441,6 @@ const playlist = {
 
     //沈园外_YueYue
 };
-
-
 console.log("Playlist Length:", Object.keys(playlist).length);
 
 // ========== ELEMENT REFERENCES ==========
@@ -450,11 +448,9 @@ const audioPlayer = document.getElementById('audioPlayer');
 const playPauseButton = document.getElementById('playPauseButton');
 const prevSongButton = document.getElementById('prevSongButton');
 const nextSongButton = document.getElementById('nextSongButton');
-
 const randomSongButton = document.getElementById('randomSongButton');
 const repeatCheckbox = document.getElementById('repeat-button');
 const repeatIcon = document.getElementById('repeatButtonIcon');
-
 const albumArtElement = document.getElementById('albumArt');
 const selectedSongElement = document.getElementById('selected-song');
 const selectedSongArtistElement = document.getElementById('selected-song-artist');
@@ -462,26 +458,18 @@ const audioDurationElement = document.getElementById('audio-duration');
 const containerPlaylist = document.getElementById('container-playlist');
 const seekbar = document.getElementById('seekbar');
 
-let currentSongIndex = 0; // Start from the first song
+let currentSongIndex = 0;
+let filteredSongList = []; // stores the currently filtered songs
 
 // ========== PLAYBACK FUNCTIONS ==========
 
-// Play a song by its index in the playlist
-function playSongByIndex(index) {
-    const songNames = Object.keys(playlist);
-    const songName = songNames[index];
-    const [imageName, , , songPath] = playlist[songName];
-
-    playSong(songName, 'Artist Name', imageName, songPath);
-}
-
-// Play a specific song
 function playSong(index) {
-    currentSongIndex=index;
-    console.log("this song is ",currentSongIndex);
-    const songNames = Object.keys(playlist);        // array of song names (keys)
-    const songNameAtIndex = songNames[index];          // the name (key) at index 3
-    const songPath = playlist[songNameAtIndex][0]; 
+    currentSongIndex = index;
+    console.log("this song is ", currentSongIndex);
+
+    const songNames = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
+    const songNameAtIndex = songNames[index];
+    const songPath = playlist[songNameAtIndex][0];
 
     console.log(songPath);
 
@@ -500,20 +488,15 @@ function playSong(index) {
         updatePlayPauseIcon();
     };
 
-    const fullTitle = Object.keys(playlist)[index];
-    const [title, artist] = fullTitle.split(" - ");
-
+    const [title, artist] = songNameAtIndex.split(" - ");
     selectedSongElement.textContent = title.trim();
     selectedSongArtistElement.textContent = artist?.trim() || "Unknown Artist";
-
     albumArtElement.src = `albumArt/${songPath}.webp`;
 
     audioPlayer.onloadedmetadata = () => {
         audioDurationElement.textContent = formatTime(audioPlayer.duration);
     };
 }
-
-
 
 // Format time (mm:ss)
 function formatTime(seconds) {
@@ -523,157 +506,89 @@ function formatTime(seconds) {
 }
 
 // ========== UI FUNCTIONS ==========
-
-// Toggle play/pause and update the icon
 function updatePlayPauseIcon() {
     playPauseButton.innerHTML = audioPlayer.paused
         ? '<i class="fa fa-play"></i>'
         : '<i class="fa fa-pause"></i>';
 }
 
-// Function to get the selected filters from the checkboxes
+// Filters
 function getSelectedFilters() {
     const selectedFilters = [];
-    const filterElements = document.querySelectorAll('.filter-button input[type="checkbox"]:checked');
-
-    filterElements.forEach(input => {
-        const filterId = input.id.replace('-filter', ''); // Get the filter name by removing '-filter' from the id
-        selectedFilters.push(filterId);
-    });
-
-    return selectedFilters;
-}
-// Ensure this function gets called on page load and when filters are toggled
-window.onload = function() {
-    populatePlaylist(); // Initial population of the playlist
-    setupFilterListeners(); // Set up listeners for filter changes
-};
-
-// Get the selected filters
-function getSelectedFilters() {
-    const selectedFilters = [];
-    // Get all checkbox inputs under the filter buttons holder and check if they're checked
     const filterElements = document.querySelectorAll('#filterButtonsHolder input[type="checkbox"]:checked');
-
     filterElements.forEach(input => {
-        // Extract filter name from the checkbox id
-        const filterId = input.id.replace('-filter', ''); // Strip '-filter' from the ID
+        const filterId = input.id.replace('-filter', '');
         selectedFilters.push(filterId);
     });
-    console.log('Selected Filters:', selectedFilters);  // Debugging log
+    console.log('Selected Filters:', selectedFilters);
     return selectedFilters;
 }
 
-// Set up listeners for the filter buttons
 function setupFilterListeners() {
     document.querySelectorAll('#filterButtonsHolder input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-            populatePlaylist();  // Repopulate the playlist when a filter is toggled
+            populatePlaylist();
         });
     });
 }
+
+// Add "Recents" tag to last 12 songs
 function addRecentsTagToLast10() {
     const songTitles = Object.keys(playlist);
-
-    // Add "Recents" tag to the last 10 songs in the playlist
-    const last10Songs = songTitles.slice(-12);  // Get the last 10 song titles
-
+    const last10Songs = songTitles.slice(-12);
     last10Songs.forEach(title => {
         const song = playlist[title];
         if (!song[2].includes('Recents')) {
-            song[2].push('Recents');  // Add "Recents" to the song's tags array if it's not already there
+            song[2].push('Recents');
         }
     });
 }
 
-// Modify the populatePlaylist function to reflect these changes
-function addRecentsTagToLast10() {
-    const songTitles = Object.keys(playlist);
-
-    // Add "Recents" tag to the last 10 songs in the playlist
-    const last10Songs = songTitles.slice(-12);  // Get the last 10 song titles
-
-    last10Songs.forEach(title => {
-        const song = playlist[title];
-        if (!song[2].includes('Recents')) {
-            song[2].push('Recents');  // Add "Recents" to the song's tags array if it's not already there
-        }
-    });
-}
-
-// Modify the populatePlaylist function to reflect these changes
+// Populate playlist container + dropdown
 function populatePlaylist() {
     const container = document.getElementById('container-playlist');
     const dropdown = document.getElementById('songSelect');
-
-    // Clear previous song options
     container.innerHTML = '';
     dropdown.innerHTML = '';
 
     const filters = [];
+    const filterIds = [
+        'recents', 'instrumental', 'epic', 'remix', 'samuelkim', 'theme',
+        'chinese', 'canto', 'english', 'jpn', 'anime', 'korean', 'pop',
+        'ateez', 'geodash', 'swedish', 'russian', 'tsfh', 'filipino',
+        'BAP', 'INFINITE', 'ENHYPEN', 'TXT', 'ONEUS', 'TEAM'
+    ];
 
-    // Check the state of each filter checkbox and add it to the filters array if checked
-    if (document.getElementById('recents-filter').checked) filters.push('Recents');
-    if (document.getElementById('instrumental-filter').checked) filters.push('Instrumental');
-    if (document.getElementById('epic-filter').checked) filters.push('Epic');
-    if (document.getElementById('remix-filter').checked) filters.push('Remix');
-    if (document.getElementById('samuelkim-filter').checked) filters.push('SamuelKim');
-    if (document.getElementById('theme-filter').checked) filters.push('Theme/OST');
-    if (document.getElementById('chinese-filter').checked) filters.push('Chinese');
-    if (document.getElementById('canto-filter').checked) filters.push('Canto');
-    if (document.getElementById('english-filter').checked) filters.push('English');
-    if (document.getElementById('jpn-filter').checked) filters.push('Japanese');
-    if (document.getElementById('anime-filter').checked) filters.push('Anime');
-    if (document.getElementById('korean-filter').checked) filters.push('Korean');
-    if (document.getElementById('pop-filter').checked) filters.push('Pop');
-    if (document.getElementById('ateez-filter').checked) filters.push('ATEEZ'); 
-    if (document.getElementById('geodash-filter').checked) filters.push('geodash'); 
-    if (document.getElementById('swedish-filter').checked) filters.push('Swedish');
-    if (document.getElementById('russian-filter').checked) filters.push('Russian');
-    if (document.getElementById('tsfh-filter').checked) filters.push('TSFH');
-    if (document.getElementById('filipino-filter').checked) filters.push('Filipino');
-    if (document.getElementById('BAP-filter').checked) filters.push('BAP');
-    if (document.getElementById('INFINITE-filter').checked) filters.push('INFINITE');
-    if (document.getElementById('ENHYPEN-filter').checked) filters.push('ENHYPEN');
-    if (document.getElementById('TXT-filter').checked) filters.push('TXT');
-    if (document.getElementById('ONEUS-filter').checked) filters.push('ONEUS');
-    if (document.getElementById('TEAM-filter').checked) filters.push('&TEAM');
+    filterIds.forEach(id => {
+        if (document.getElementById(`${id}-filter`)?.checked) filters.push(id === 'theme' ? 'Theme/OST' : id);
+    });
 
-    //if (document.getElementById('favorites-filter').checked) filters.push('Favorites');
+    console.log("FILTERS CHOSEN:", filters);
+    let anyMatch = false;
+    filteredSongList = []; // reset filtered list
 
-    console.log("FILTERS CHOSEN: ", filters);  // Debugging log
-
-    let anyMatch = false; 
-
-    // Load favorites from localStorage
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || {}; 
-
-    // Add "Recents" tag to the last 10 songs in the playlist
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
     addRecentsTagToLast10();
 
-    // Iterate through the playlist and apply filters
     for (const title in playlist) {
         if (playlist.hasOwnProperty(title)) {
             const song = playlist[title];
-            const songTags = song[2];  // songTags are at index 2
+            const songTags = song[2];
 
-            // Check if the song matches all the selected filters
             const matchesFilters = filters.every(filter => {
-                if (filter === 'Favorites') {
-                    return favorites[title];  // Check if the song is in favorites
-                }
-                return songTags.includes(filter);  // Check if the song has the filter tag
+                if (filter === 'Favorites') return favorites[title];
+                return songTags.includes(filter);
             });
 
             if (matchesFilters) {
-                // If the song matches the filters, create a new song item element
+                filteredSongList.push(title); // add to filtered list
 
                 const songItem = document.createElement('div');
                 songItem.classList.add('song-item');
-                songItem.style.backgroundColor = "transparent";  // Assuming color can be applied here
+                songItem.style.backgroundColor = "transparent";
 
                 const image = document.createElement('img');
-                image.src = `albumArt/${song[0]}.webp`;  // Assuming the album image is in `song[0]`
+                image.src = `albumArt/${song[0]}.webp`;
                 image.classList.add('song-image');
                 image.alt = title;
 
@@ -692,54 +607,35 @@ function populatePlaylist() {
 
                 description.appendChild(songTitle);
                 description.appendChild(artistName);
-
                 songItem.appendChild(image);
                 songItem.appendChild(description);
 
-                // Add click event to each song item
                 songItem.addEventListener('click', () => {
-                    const songNames = Object.keys(playlist);
-                    const currentSongIndex = songNames.indexOf(title); // Get the index of the clicked song
-                    console.log("Clicked index:", currentSongIndex);
-                    playSong(currentSongIndex); // Play the song at the clicked index
+                    const songNames = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
+                    currentSongIndex = songNames.indexOf(title);
+                    playSong(currentSongIndex);
                 });
 
-                // Append the song item to the playlist container
                 container.appendChild(songItem);
                 anyMatch = true;
             }
         }
     }
 
-    // If no songs match the filters, you can display a message
     if (!anyMatch) {
         const noSongsMessage = document.createElement('p');
         noSongsMessage.textContent = "No songs match the selected filters.";
-        noSongsMessage.style.fontFamily = "Arimo, sans-serif"; // Set font, using a fallback font
+        noSongsMessage.style.fontFamily = "Arimo, sans-serif";
         container.appendChild(noSongsMessage);
     }
 }
 
-// Event listener to trigger populatePlaylist when a filter is changed
+// Event listener to trigger populatePlaylist when a filter changes
 document.querySelectorAll('.filter-button input').forEach(input => {
     input.addEventListener('change', populatePlaylist);
 });
-
-
-
-
-document.querySelectorAll('.filter-button input').forEach(input => {
-
-    input.addEventListener('change', populatePlaylist);
-});
-
-
-
-
-
 
 // ========== EVENT LISTENERS ==========
-
 playPauseButton.addEventListener('click', () => {
     if (audioPlayer.paused) {
         audioPlayer.play();
@@ -749,14 +645,9 @@ playPauseButton.addEventListener('click', () => {
     updatePlayPauseIcon();
 });
 
-audioPlayer.addEventListener('play', () => {
-
-    updatePlayPauseIcon();
-});
-
+audioPlayer.addEventListener('play', updatePlayPauseIcon);
 audioPlayer.addEventListener('pause', updatePlayPauseIcon);
 
-// Seekbar updates
 audioPlayer.addEventListener('timeupdate', () => {
     if (!isNaN(audioPlayer.duration)) {
         seekbar.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
@@ -764,88 +655,67 @@ audioPlayer.addEventListener('timeupdate', () => {
 });
 
 seekbar.addEventListener('input', () => {
-    console.log("repeat mode:",repeatCheckbox.checked);
     const newTime = (seekbar.value / 100) * audioPlayer.duration;
     audioPlayer.currentTime = newTime;
 });
 
-
-
 prevSongButton.addEventListener('click', () => {
+    const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
     currentSongIndex--;
-    console.log("the curr songind: ",currentSongIndex);
-
-    // Loop to last song if at the beginning
     if (currentSongIndex < 0) {
-        currentSongIndex = Object.keys(playlist).length - 1;
+        currentSongIndex = songs.length - 1;
     }
-
     playSong(currentSongIndex);
 });
 
 nextSongButton.addEventListener('click', () => {
+    const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
     currentSongIndex++;
-    if (currentSongIndex >= Object.keys(playlist).length) {
-        currentSongIndex = 0; // Loop to first song if at the end
+    if (currentSongIndex >= songs.length) {
+        currentSongIndex = 0;
     }
     playSong(currentSongIndex);
 });
 
-
 const repeatButton = document.getElementById('repeatButtonIcon');
-
-// Ensure the initial icon reflects the checkbox state
-repeatIcon.innerHTML = repeatCheckbox.checked 
-    ? '<i class="fa fa-remove"></i>' 
+repeatIcon.innerHTML = repeatCheckbox.checked
+    ? '<i class="fa fa-remove"></i>'
     : '<i class="fa fa-refresh"></i>';
 
-// Toggle the repeat mode when the button is clicked
 repeatButton.addEventListener('click', () => {
-    // Toggle the checkbox state manually
     repeatCheckbox.checked = !repeatCheckbox.checked;
-    console.log("Repeat checkbox state after toggle:", repeatCheckbox.checked);
-
-
-    // Change the icon based on the new state
     if (repeatCheckbox.checked) {
-        repeatIcon.innerHTML = '<i class="fa fa-remove"></i>'; // Icon for repeat ON
+        repeatIcon.innerHTML = '<i class="fa fa-remove"></i>';
         console.log("🔁 Repeat mode is ON");
     } else {
-        repeatIcon.innerHTML = '<i class="fa fa-refresh"></i>'; // Icon for repeat OFF
+        repeatIcon.innerHTML = '<i class="fa fa-refresh"></i>';
         console.log("🔁 Repeat mode is OFF");
     }
 });
 
 audioPlayer.addEventListener('ended', () => {
-    console.log("Song ended. Repeat mode: ", repeatCheckbox.checked); 
-    if (repeatCheckbox.checked) {
-        console.log("Repeating current song...");
+    console.log("Song ended. Repeat mode:", repeatCheckbox.checked);
+    const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
 
-        playSong(currentSongIndex); // Replay current song
+    if (repeatCheckbox.checked) {
+        playSong(currentSongIndex);
     } else {
-        console.log("Moving to next song...");
         currentSongIndex++;
-        if (currentSongIndex >= Object.keys(playlist).length) {
-            currentSongIndex = 0; // Wrap around to the first song
+        if (currentSongIndex >= songs.length) {
+            currentSongIndex = 0;
         }
-        playSong(currentSongIndex); // Play next
+        playSong(currentSongIndex);
     }
 });
 
 randomSongButton.addEventListener('click', () => {
-    // Generate a random index within the bounds of the playlist length
-    currentSongIndex = Math.floor(Math.random() * Object.keys(playlist).length);
-
-    console.log("Playing random song at index:", currentSongIndex); // Debugging log
-
-    // Play the song at the random index
+    const songs = filteredSongList.length > 0 ? filteredSongList : Object.keys(playlist);
+    currentSongIndex = Math.floor(Math.random() * songs.length);
     playSong(currentSongIndex);
 });
 
-
-
-
-
-
 // Populate playlist on page load
-window.onload = populatePlaylist;
+window.onload = () => {
+    populatePlaylist();
+    setupFilterListeners();
+};
