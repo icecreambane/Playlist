@@ -553,9 +553,9 @@ function populatePlaylist() {
 
     const filters = [];
     const filterIds = [
-        'recents', 'instrumental', 'epic', 'remix', 'samuelkim', 'theme',
-        'chinese', 'canto', 'english', 'jpn', 'anime', 'korean', 'pop',
-        'ateez', 'geodash', 'swedish', 'russian', 'tsfh', 'filipino',
+        'Recents', 'Instrumental', 'Epic', 'Remix', 'SamuelKim', 'Theme/OST',
+        'Chinese', 'Canto', 'English', 'Jpn', 'anime', 'Korean', 'Pop',
+        'ATEEZ', 'Geodash', 'Swedish', 'Russian', 'TSFH', 'Filipino',
         'BAP', 'INFINITE', 'ENHYPEN', 'TXT', 'ONEUS', 'TEAM'
     ];
 
