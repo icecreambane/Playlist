@@ -431,7 +431,8 @@ const playlist = {
     "yes baby - Madison Beer": ["yes_baby_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
     "Make You Mine - Madison Beer": ["MakeYouMine_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
         "沈园外 - YueYue": ["沈园外_YueYue","rgb(251 114 168)",["Chinese","Pop"]],
-        "La la love me - VIVIZ": ["La_la_love_me_VIVIZ","rgb(251 114 168)",["Korean","Pop"]]
+        "La la love me - VIVIZ": ["La_la_love_me_VIVIZ","rgb(251 114 168)",["Korean","Pop"]],
+"난빛나 - Boys Planet": ["난빛나_Boys_Planet","rgb(251 114 168)",["Korean","Pop"]]
 
 
 
