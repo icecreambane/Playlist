@@ -432,15 +432,16 @@ const playlist = {
     "Make You Mine - Madison Beer": ["MakeYouMine_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
         "沈园外 - YueYue": ["沈园外_YueYue","rgb(251 114 168)",["Chinese","Pop"]],
         "La la love me - VIVIZ": ["La_la_love_me_VIVIZ","rgb(251 114 168)",["Korean","Pop"]],
-"난빛나 - Boys Planet": ["Hereami_Boys_Planet","rgb(251 114 168)",["Korean","Pop"]]
+"난빛나 - Boys Planet": ["Hereami_Boys_Planet","rgb(251 114 168)",["Korean","Pop"]],
+"Imaginary Friend - ITZY": ["Imaginary_Friend_ITZY","rgb(251 114 168)",["Korean","Pop"]],
+"INVU (Rock) - Taeyeon": ["INVU_Rock_Taeyeon","rgb(251 114 168)",["Korean","Pop"]],
+"Love Me Out Loud - Chungha": ["Love_Me_Out_Loud_Chungha","rgb(251 114 168)",["Korean","Pop"]],
+"Midnight Tours - NOVAX": ["Midnight_Tours_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
+"No Mind - SIYEON": ["No_Mind_SIYEON","rgb(251 114 168)",["Korean","Pop"]],
+"Starlight - Dreamcatcher": ["Starlight_Dreamcatcher","rgb(251 114 168)",["Korean","Pop"]],
+"Without You - Mad Clown": ["Without_You_Mad_Clown","rgb(251 114 168)",["Korean","Pop"]]
 
-
-
-
-
-
-
-    //La_la_love_me_VIVIZ
+ // 
 };
 
 
