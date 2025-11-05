@@ -232,6 +232,7 @@ html, body {
 
 .song-item .song-image:hover{
     cursor: pointer;
+    transform: scale(0.96);
 }
 
 .song-title{
