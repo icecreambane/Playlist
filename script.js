@@ -439,7 +439,8 @@ const playlist = {
 "Midnight Tours - NOVAX": ["Midnight_Tours_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
 "No Mind - SIYEON": ["No_Mind_SIYEON","rgb(251 114 168)",["Korean","Pop"]],
 "Starlight - Dreamcatcher": ["Starlight_Dreamcatcher","rgb(251 114 168)",["Korean","Pop"]],
-"Without You - Mad Clown": ["Without_You_Mad_Clown","rgb(251 114 168)",["Korean","Pop"]]
+"Without You - Mad Clown": ["Without_You_Mad_Clown","rgb(251 114 168)",["Korean","Pop"]],
+    "Sayonara Hitori - TAEMIN": ["Sayonara_Hitori_TAEMIN","rgb(251 114 168)",["Korean","Japanese","Pop"]]
 
  // 
 };
