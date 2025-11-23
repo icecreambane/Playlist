@@ -440,7 +440,12 @@ const playlist = {
 "No Mind - SIYEON": ["No_Mind_SIYEON","rgb(251 114 168)",["Korean","Pop"]],
 "Starlight - Dreamcatcher": ["Starlight_Dreamcatcher","rgb(251 114 168)",["Korean","Pop"]],
 "Without You - Mad Clown": ["Without_You_Mad_Clown","rgb(251 114 168)",["Korean","Pop"]],
-    "Sayonara Hitori - TAEMIN": ["Sayonara_Hitori_TAEMIN","rgb(251 114 168)",["Korean","Japanese","Pop"]]
+    "Sayonara Hitori - TAEMIN": ["Sayonara_Hitori_TAEMIN","rgb(251 114 168)",["Korean","Japanese","Pop"]],
+    "Aqua - R3DN1K": ["Aqua_R3DN1K","rgb(251 114 168)",["Instrumental","English"]],
+    "Innocent - R3DN1K": ["Innocent_R3DN1K","rgb(251 114 168)",["Instrumental","English"]],
+
+
+
 
  // 
 };
