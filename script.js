@@ -442,7 +442,10 @@ const playlist = {
 "Without You - Mad Clown": ["Without_You_Mad_Clown","rgb(251 114 168)",["Korean","Pop"]],
     "Sayonara Hitori - TAEMIN": ["Sayonara_Hitori_TAEMIN","rgb(251 114 168)",["Korean","Japanese","Pop"]],
     "Aqua - R3DN1K": ["Aqua_R3DN1K","rgb(251 114 168)",["Instrumental","English"]],
-    "Innocent - R3DN1K": ["Innocent_R3DN1K","rgb(251 114 168)",["Instrumental","English"]]
+    "Innocent - R3DN1K": ["Innocent_R3DN1K","rgb(251 114 168)",["Instrumental","English"]],
+    "Never say never - Mr Luspak": ["Never_say_never_MrLuspak","rgb(251 114 168)",["Instrumental","English"]],
+    "Gnarly Remix - EYELIKE": ["Gnarly_Remix_EYELIKE","rgb(251 114 168)",["Remix","English","Pop"]],
+    "Touch Remix - EYELIKE": ["Touch_Remix_EYELIKE","rgb(251 114 168)",["Remix","English","Pop"]]
 
 
 
