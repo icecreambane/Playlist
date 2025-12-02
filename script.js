@@ -445,8 +445,9 @@ const playlist = {
     "Innocent - R3DN1K": ["Innocent_R3DN1K","rgb(251 114 168)",["Instrumental","English"]],
     "Never say never - Mr Luspak": ["Never_say_never_MrLuspak","rgb(251 114 168)",["Instrumental","English"]],
     "Gnarly Remix - EYELIKE": ["Gnarly_Remix_EYELIKE","rgb(251 114 168)",["Remix","English","Pop"]],
-    "Touch Remix - EYELIKE": ["Touch_Remix_EYELIKE","rgb(251 114 168)",["Remix","English","Pop"]]
-
+    "Touch Remix - EYELIKE": ["Touch_Remix_EYELIKE","rgb(251 114 168)",["Remix","English","Pop"]],
+    "Fate of Ophelia - GWP": ["Fate_of_Ophelia_GWP","rgb(251 114 168)",["Remix","English","Korean","Pop"]],
+    "Avid - SawanoHiroyuki": ["Avid_SawanoHiroyuki","rgb(251 114 168)",["Japanese","Pop"]]
 
 
 
