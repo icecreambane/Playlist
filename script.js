@@ -450,7 +450,7 @@ const playlist = {
     "Avid - SawanoHiroyuki": ["Avid_SawanoHiroyuki","rgb(251 114 168)",["Japanese","Pop"]],
     "Voices of the Chord - Hiroyuki Sawano": ["VoicesoftheChord_HiroyukiSawano","rgb(251 114 168)",["Japanese","Pop"]]
 
-    VoicesoftheChord_HiroyukiSawano
+
 
 
 
