@@ -450,9 +450,9 @@ const playlist = {
     "Avid - SawanoHiroyuki": ["Avid_SawanoHiroyuki","rgb(251 114 168)",["Japanese","Pop"]],
     "Voices of the Chord - Hiroyuki Sawano": ["VoicesoftheChord_HiroyukiSawano","rgb(251 114 168)",["English","Pop"]],
     "Gravity - Kim Jongwan": ["Gravity_KimJongwan","rgb(251 114 168)",["Korean","Theme/OST"]],
-        "Once Again (Slowed) - Kim Nayoung": ["Once_Again_Slowed_KimNayoung","rgb(251 114 168)",["Korean","Theme/OST","Remix"]],
-        "Phoenix (Rock) - LoL": ["Phoenix_Rock_LoL","rgb(251 114 168)",["English","Theme/OST","Remix]],
-        "Kamin - EMIN": ["Kamin_EMIN","rgb(251 114 168)",["Russian","Pop"]]
+    "Once Again (Slowed) - Kim Nayoung": ["Once_Again_Slowed_KimNayoung","rgb(251 114 168)",["Korean","Theme/OST","Remix"]],
+    "Phoenix (Rock) - LoL": ["Phoenix_Rock_LoL","rgb(251 114 168)",["English","Theme/OST","Remix"]],
+    "Kamin - EMIN": ["Kamin_EMIN","rgb(251 114 168)",["Russian","Pop"]]
 
 
  // 
