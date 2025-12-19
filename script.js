@@ -452,7 +452,11 @@ const playlist = {
     "Gravity - Kim Jongwan": ["Gravity_KimJongwan","rgb(251 114 168)",["Korean","Theme/OST"]],
     "Once Again (Slowed) - Kim Nayoung": ["Once_Again_Slowed_KimNayoung","rgb(251 114 168)",["Korean","Theme/OST","Remix"]],
     "Phoenix (Rock) - LoL": ["Phoenix_Rock_LoL","rgb(251 114 168)",["English","Theme/OST","Remix"]],
-    "Kamin - EMIN": ["Kamin_EMIN","rgb(251 114 168)",["Russian","Pop"]]
+    "Kamin - EMIN": ["Kamin_EMIN","rgb(251 114 168)",["Russian","Pop"]],
+    "Faded (Remix) - Alan Walker ": ["Faded_AlanWalkerRemix","rgb(251 114 168)",["English","Pop","Remix"]],
+    "Phoenix (Remix) - LoL ": ["Phoenix_LoLRemix","rgb(251 114 168)",["English","Pop","Theme/OST","Remix"]]
+
+
 
 
  // 
