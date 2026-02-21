@@ -455,7 +455,9 @@ const playlist = {
     "Kamin - EMIN": ["Kamin_EMIN","rgb(251 114 168)",["Russian","Pop"]],
     "Faded (Remix) - Alan Walker ": ["Faded_AlanWalkerRemix","rgb(251 114 168)",["English","Pop","Remix"]],
     "Phoenix (Remix) - LoL ": ["Phoenix_LoLRemix","rgb(251 114 168)",["English","Pop","Theme/OST","Remix"]],
-    "Lost On You - LP (slowed) ": ["Lost_On_You_LP_slowed","rgb(251 114 168)",["English","Pop","Remix"]]
+    "Lost On You - LP (slowed) ": ["Lost_On_You_LP_slowed","rgb(251 114 168)",["English","Pop","Remix"]],
+    "defocus - NOVA-X": ["defocus_NOVAX","rgb(251 114 168)",["Korean","Pop"]]
+
 
 
 
