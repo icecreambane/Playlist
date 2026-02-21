@@ -421,12 +421,12 @@ const playlist = {
     "夜, 萤火虫和你 - Aniface": ["夜萤火虫和你_Aniface","rgb(251 114 168)",["Instrumental"]],
     "Booming Silence - Wesley Koo": ["Booming_Silence_WesleyKoo","rgb(251 114 168)",["Instrumental"]],
     "红昭愿 - 音阙诗听": ["红昭愿_音阙诗听","rgb(251 114 168)",["Chinese","Pop"]],
-    "RUNAWAY - NOVA-X": ["RUNAWAY_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
-    "Fractured Sound - NOVA-X": ["Fractured_Sound_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
-    "ECHO (Remix) - NOVA-X": ["ECHO_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
+    "RUNAWAY - NOVA-X": ["RUNAWAY_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]],
+    "Fractured Sound - NOVA-X": ["Fractured_Sound_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]],
+    "ECHO (Remix) - NOVA-X": ["ECHO_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]],
     "What's wrong - T-ARA": ["Whats_wrong_T-ARA","rgb(251 114 168)",["Korean","Pop"]],
     "What's wrong - BAE173": ["Whats_wrong_BAE173","rgb(251 114 168)",["Korean","Pop"]],
-    "Annyeong - NOVA-X": ["Annyeong_NOVAX","rgb(251 114 168)",["Korean","Pop"]],
+    "Annyeong - NOVA-X": ["Annyeong_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]],
     "bittersweet - Madison Beer": ["bittersweet_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
     "yes baby - Madison Beer": ["yes_baby_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
     "Make You Mine - Madison Beer": ["MakeYouMine_Madison_Beer","rgb(251 114 168)",["English","Pop"]],
@@ -456,7 +456,7 @@ const playlist = {
     "Faded (Remix) - Alan Walker ": ["Faded_AlanWalkerRemix","rgb(251 114 168)",["English","Pop","Remix"]],
     "Phoenix (Remix) - LoL ": ["Phoenix_LoLRemix","rgb(251 114 168)",["English","Pop","Theme/OST","Remix"]],
     "Lost On You - LP (slowed) ": ["Lost_On_You_LP_slowed","rgb(251 114 168)",["English","Pop","Remix"]],
-    "defocus - NOVA-X": ["defocus_NOVAX","rgb(251 114 168)",["Korean","Pop"]]
+    "defocus - NOVA-X": ["defocus_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]]
 
 
 
@@ -557,12 +557,13 @@ function normalizeFilterId(id) {
         'russian': 'Russian',
         'tsfh': 'TSFH',
         'filipino': 'Filipino',
-        'bap': 'B.A.P.',
+        'bap': 'BAP',
         'infinite': 'INFINITE',
         'enhypen': 'ENHYPEN',
         'txt': 'TXT',
         'oneus': 'ONEUS',
-        'team': '&TEAM'
+        'team': '&TEAM',
+        'novax':'NOVAX'
     };
     return map[id.toLowerCase()] || id;
 }
