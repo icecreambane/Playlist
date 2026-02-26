@@ -456,7 +456,9 @@ const playlist = {
     "Faded (Remix) - Alan Walker ": ["Faded_AlanWalkerRemix","rgb(251 114 168)",["English","Pop","Remix"]],
     "Phoenix (Remix) - LoL ": ["Phoenix_LoLRemix","rgb(251 114 168)",["English","Pop","Theme/OST","Remix"]],
     "Lost On You - LP (slowed) ": ["Lost_On_You_LP_slowed","rgb(251 114 168)",["English","Pop","Remix"]],
-    "defocus - NOVA-X": ["defocus_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]]
+    "defocus - NOVA-X": ["defocus_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]],
+    "敬 - 程今": ["敬_程今","rgb(251 114 168)",["Chinese","Pop"]],
+    "雨是神的煙花 - Nyxx.": ["雨是神的煙花_Nyxx","rgb(251 114 168)",["Chinese","Pop"]]
 
 
 
