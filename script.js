@@ -458,7 +458,8 @@ const playlist = {
     "Lost On You - LP (slowed) ": ["Lost_On_You_LP_slowed","rgb(251 114 168)",["English","Pop","Remix"]],
     "defocus - NOVA-X": ["defocus_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]],
     "敬 - 程今": ["敬_程今","rgb(251 114 168)",["Chinese","Pop"]],
-    "雨是神的煙花 - Nyxx.": ["雨是神的煙花_Nyxx","rgb(251 114 168)",["Chinese","Pop"]]
+    "雨是神的煙花 - Nyxx.": ["雨是神的煙花_Nyxx","rgb(251 114 168)",["Chinese","Pop"]],
+    "关山酒 - Bao小易": ["关山酒_Bao小易","rgb(251 114 168)",["Chinese"]]
 
 
 
