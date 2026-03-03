@@ -459,7 +459,8 @@ const playlist = {
     "defocus - NOVA-X": ["defocus_NOVAX","rgb(251 114 168)",["Korean","Pop","NOVAX"]],
     "敬 - 程今": ["敬_程今","rgb(251 114 168)",["Chinese","Pop"]],
     "雨是神的煙花 - Nyxx.": ["雨是神的煙花_Nyxx","rgb(251 114 168)",["Chinese","Pop"]],
-    "关山酒 - Bao小易": ["关山酒_Bao小易","rgb(251 114 168)",["Chinese"]]
+    "关山酒 - Bao小易": ["关山酒_Bao小易","rgb(251 114 168)",["Chinese"]],
+    "壁上观 - 张晓涵": ["壁上观_张晓涵","rgb(251 114 168)",["Chinese"]]
 
 
 
