@@ -464,7 +464,9 @@ const playlist = {
     "我叫长安 - 韩小夏": ["我叫长安_韩小夏","rgb(251 114 168)",["Chinese"]],
     "雾里 - 韩小夏": ["雾里_韩小夏","rgb(251 114 168)",["Chinese"]],
     "堕 - 星火社": ["堕_星火社","rgb(251 114 168)",["Chinese"]],
-    "天地任我癫 - Yuki": ["天地任我癫_Yuki","rgb(251 114 168)",["Chinese"]]
+    "天地任我癫 - Yuki": ["天地任我癫_Yuki","rgb(251 114 168)",["Chinese"]],
+    "Love Options - Bestie": ["Love_Options_Bestie","rgb(251 114 168)",["Chinese"]],
+    "Illusionary x 室内系 - Remix": ["IllusionaryDaytime室内系TrackMaker_Remix","rgb(251 114 168)",["Chinese"]]
 
 
 
