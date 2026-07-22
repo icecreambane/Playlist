@@ -482,7 +482,7 @@ const playlist = {
     "X - Lexie Liu": ["X_Lexie_Liu","rgb(251 114 168)",["English"]],
     "MIRA - Lexie Liu": ["MIRA_Lexie_Liu","rgb(251 114 168)",["Chinese"]],
     "MAGICIAN - Lexie Liu": ["MAGICIAN_Lexie_Liu","rgb(251 114 168)",["Chinese"]],
-    "D&D - Lexie Liu": ["D_Lexie_Liu","rgb(251 114 168)",["Chinese"]],
+    "D&D - Lexie Liu": ["D&D_Lexie_Liu","rgb(251 114 168)",["Chinese"]],
     "大梦归离 - OST": ["大梦归离_OST","rgb(251 114 168)",["Chinese"]],
 
     "Lanterns - Xomu": ["Lanterns_Xomu","rgb(251 114 168)",["Instrumental"]],
