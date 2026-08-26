@@ -495,7 +495,7 @@ const playlist = {
     "Goodbye - Samuel Kim": ["Goodbye_Samuel_Kim","rgb(251 114 168)",["Epic","SamuelKim","Theme/OST"]],
     "singasong - svt": ["singasong_svt","rgb(251 114 168)",["Pop","Korean"]],
     "Edge17 - HSCC": ["Edge17_HSCC","rgb(251 114 168)",["English"]],
-    "只要有你 - 林栖": ["只要有你_林栖","rgb(251 114 168)",["Chinese","Pop]],
+    "只要有你 - 林栖": ["只要有你_林栖","rgb(251 114 168)",["Chinese","Pop"]],
     "问天 - 佳偶天成": ["问天_佳偶天成","rgb(251 114 168)",["Chinese","Theme/OST"]],
     "观尘歌 - 胡夏": ["观尘歌_胡夏","rgb(251 114 168)",["Chinese"]]
 
