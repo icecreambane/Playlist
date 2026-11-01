@@ -498,7 +498,12 @@ const playlist = {
     "只要有你 - 林栖": ["只要有你_林栖","rgb(251 114 168)",["Chinese","Pop"]],
     "问天 - 佳偶天成": ["问天_佳偶天成","rgb(251 114 168)",["Chinese","Theme/OST"]],
     "观尘歌 - 胡夏": ["观尘歌_胡夏","rgb(251 114 168)",["Chinese"]],
-    "Another Life - KEY": ["AnotherLife_KEY","rgb(251 114 168)",["Korean","Pop]],
+    "Another Life - KEY": ["AnotherLife_KEY","rgb(251 114 168)",["Korean","Pop"]],
+    "Eo17 - Synthwave": ["Eo17_Synthwave","rgb(251 114 168)",["Instrumental","Remix"]],
+    "为你而来 - 萧泽AI": ["为你而来_萧泽AI","rgb(251 114 168)",["Chinese","Remix","Pop"]],
+    "卜卦 - 崔子格": ["卜卦_崔子格","rgb(251 114 168)",["Chinese","Remix","Pop"]],
+     "大梦归 - 官初": ["大梦归_官初","rgb(251 114 168)",["Chinese","Remix","Pop"]],
+     "难解_一只白羊": ["难解_一只白羊","rgb(251 114 168)",["Chinese","Remix","Pop"]],
 
     
 
