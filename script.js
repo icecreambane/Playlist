@@ -504,6 +504,9 @@ const playlist = {
     "卜卦 - 崔子格": ["卜卦_崔子格","rgb(251 114 168)",["Chinese","Remix","Pop"]],
      "大梦归 - 官初": ["大梦归_官初","rgb(251 114 168)",["Chinese","Remix","Pop"]],
      "难解_一只白羊": ["难解_一只白羊","rgb(251 114 168)",["Chinese","Remix","Pop"]],
+         "赐我 - AI": ["赐我_AI","rgb(251 114 168)",["Chinese","Remix","Pop"]],
+    "壁上观 - AI": ["壁上观_AI","rgb(251 114 168)",["Chinese","Remix","Pop"]],
+    "Unethical (Instrumental) - Faouzia": ["Unethical_Instrumental_Faouzia","rgb(251 114 168)",["Instrumental","Remix"]],
 
     
 
