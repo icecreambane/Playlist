@@ -507,6 +507,7 @@ const playlist = {
          "赐我 - AI": ["赐我_AI","rgb(251 114 168)",["Chinese","Remix","Pop"]],
     "壁上观 - AI": ["壁上观_AI","rgb(251 114 168)",["Chinese","Remix","Pop"]],
     "Unethical (Instrumental) - Faouzia": ["Unethical_Instrumental_Faouzia","rgb(251 114 168)",["Instrumental","Remix"]],
+    "We Are The People - EOTS": ["We_Are_The_People_EOTS","rgb(251 114 168)",["English","Pop"]],
 
     
 
