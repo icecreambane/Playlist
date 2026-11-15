@@ -508,6 +508,8 @@ const playlist = {
     "壁上观 - AI": ["壁上观_AI","rgb(251 114 168)",["Chinese","Remix","Pop"]],
     "Unethical (Instrumental) - Faouzia": ["Unethical_Instrumental_Faouzia","rgb(251 114 168)",["Instrumental","Remix"]],
     "We Are The People - EOTS": ["We_Are_The_People_EOTS","rgb(251 114 168)",["English","Pop"]],
+    "Instant Crush - Daft Punk": ["Instant_Crush_Daft_Punk","rgb(251 114 168)",["English","Pop"]],
+    "Nightcall - Kavinsky": ["Nightcall_Kavinsky","rgb(251 114 168)",["English","Pop"]],
 
     
 
